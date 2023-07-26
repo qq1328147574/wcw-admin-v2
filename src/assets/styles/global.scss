@@ -1,0 +1,84 @@
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.wrap {
+  flex-wrap: wrap;
+}
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.align-start {
+  align-items: flex-start;
+}
+.align-center {
+  align-items: center;
+}
+.align-end {
+  align-items: flex-end;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.justify-between {
+  justify-content: space-between;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+
+#app {
+  background: #e6ebec;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.icon-size {
+  font-size: 18px;
+  line-height: 14px;
+}
+
+.font-base {
+  font-size: 14px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+// 详情信息css
+.v-drawer-info {
+  padding: 10px;
+  .weui-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .weui-flex-hd, .weui-flex-bd {
+      min-width: 100px;
+    }
+  }
+}
+
+
+.el-form-item {
+  margin-bottom: 10px !important;
+}
+
+.el-form-item__label {
+  padding-bottom: 0 !important;
+}
+
+::v-deep .cell {
+  text-align: center !important;
+  max-height: 80px;
+}

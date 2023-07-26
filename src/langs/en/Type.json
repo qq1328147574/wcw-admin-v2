@@ -1,0 +1,14 @@
+{
+  "deposit": "充币",
+  "withdraw": "提币",
+  "withdrawFee": "提币手续费",
+  "airdrop": "空投",
+  "underweight": "减持",
+  "recommendReward": "推荐奖励",
+  "recommendAdditionalReward": "推荐额外奖励",
+  "payCapitalDeposit": "第三方充值",
+  "payCapitalPayout": "第三方支付",
+  "tFMegaDeposit": "转账Mega存入",
+  "tFMegaWithdraw": "转账Mega提出",
+  "depositReward": "充值奖金"
+}

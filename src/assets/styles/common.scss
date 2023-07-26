@@ -1,0 +1,65 @@
+a,button,input{ outline:none; border:0;resize:none; }
+input{ outline:none; border:0; }
+input:focus{
+  outline:none; 
+  box-shadow: none !important;
+}
+/*
+ *  去掉input type=number时输入框内的上下箭头
+ */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+}
+input[type="number"]{
+  -moz-appearance: textfield !important;
+}
+ul, li{ list-style: none;}
+
+// 英文字符自动换行
+.text-wrap {
+  word-wrap: break-word;
+  white-space: normal;
+  word-break: break-all;
+}
+
+.el-divider--horizontal { margin: 20px 0; }
+
+.el-tag--small {
+  height: 26px !important;
+  line-height: 24px !important;
+}
+
+.el-tag.el-tag--danger {
+  background-color: #fee6ee !important;
+  border-color: #fdccdd !important;
+  color: #f50029 !important;
+}
+
+.el-tag.el-tag--warning {
+  background-color: #fffbe6 !important;
+  border-color: #fff7cc !important;
+  color: #f0a029 !important;
+}
+
+.el-tag.el-tag--info {
+  background-color: #f4f4f5 !important;
+  border-color: #e9e9eb !important;
+  color: #909399 !important;
+}
+
+.backgColor-bg-right {
+  border: 0px;
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffb500+0,f7802b+100 */
+  background: #ffb500; /* Old browsers */
+  background: -moz-linear-gradient(left,  #ffb500 0%, #f7802b 65%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left,  #ffb500 0%,#f7802b 65%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right,  #ffb500 0%,#f7802b 65%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffb500', endColorstr='#f7802b',GradientType=1 ); /* IE6-9 */
+}
+
+.background-color {background-color: $defaultColor;}
+.background-rgba {background-color: rgba($color: $defaultColor, $alpha: 0.1);}
+.background-white {background-color: #ffffff;}
+
+
