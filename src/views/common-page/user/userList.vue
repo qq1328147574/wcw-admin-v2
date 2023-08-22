@@ -17,10 +17,12 @@
       <el-button size="small" type="warning" slot="toolbar" icon="el-icon-tickets" @click="openNewTreePage">组织树形图</el-button>
       
 
-      <el-table-column slot="tableOperaBtn" :label="$t('Users.操作')" fixed="right" align="center" min-width="320">
+      <el-table-column slot="tableOperaBtn" :label="$t('Users.操作')" align="center" min-width="320">
         <template slot-scope="{row}">
+          <el-button type="text" size="small" icon="el-icon-edit-outline" class="text-primary" @click="openDialog(3, row)">修改用户信息</el-button>
           <el-button type="text" size="small" icon="el-icon-edit-outline" class="text-primary" @click="openDialog(1, row)">空投资产</el-button>
           <el-button type="text" size="small" icon="el-icon-tickets" class="text-black" @click="openNewTreePage(row)">组织树形图</el-button>
+          <el-button type="text" size="small" icon="el-icon-zoom-in" class="text-black" @click="$router.push('/user/report/' + row.id + '/' + row.userName)">用户报告</el-button>
         </template>
       </el-table-column>
     </ElTable>
@@ -117,7 +119,7 @@ interface IndexData {
 };
 let params: IndexData = {
   page: 1,
-  pageSize: 14
+  pageSize: 20
 }
 
 @Component({
@@ -490,6 +492,7 @@ export default class UsersList extends Vue {
       this.buttonLoading = false;
     });
   }
+
 }
 </script>
 

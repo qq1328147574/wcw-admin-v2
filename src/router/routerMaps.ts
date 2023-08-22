@@ -31,7 +31,19 @@ export const mountRouterMenu: any[] = [
         name: 'InviteTree',
         component: () => import('@/views/common-page/user/userTree.vue'),
         meta: { title: '组织树形图' },
-      }
+      },
+      {
+        path: '/user/report/:id/:userName',
+        name: 'UserReport',
+        component: () => import('@/views/common-page/user/userReport.vue'),
+        meta: { title: '用户报告' },
+      },
+      {
+        path: "/live-tickets",
+        name: "LiveTickets",
+        component: () => import("@/views/common-page/assets/liveTickets.vue"),
+        meta: { title: "实时交易" },
+      },
     ]
   },
   {
@@ -227,5 +239,17 @@ export const localsRouter: any[] = [
     name: 'AssetsVoucherRecharge',
     component: getComponentMMin('common-page/assets', 'voucherRecharge'),
     meta: { title: '凭证充值订单' }
+  },
+  {
+    path: '/user/performance',
+    name: 'UserPerformance',
+    component: getComponentMMin('common-page/user', 'userPerformaceList'),
+    meta: { title: '用户业绩' }
+  },
+  {
+    path: '/total/report',
+    name: 'TotalReport',
+    component: getComponentMMin('common-page/report', 'totalReport'),
+    meta: { title: '总报告' }
   },
 ]

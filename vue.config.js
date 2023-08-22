@@ -76,7 +76,7 @@ let isDevCS = {
  * NUoXRtmGyM
  */
 module.exports = {
-    publicPath: isDev === "production" ? "/v2/admin" : "/wcw/admin/",
+    publicPath: isDev === "production" ? "/NUoXRtmGyM" : "/wcw/admin/",
     outputDir: isDev === "production" ? "wcw-admin-prod" : "wcw-admin-dev",
     runtimeCompiler: true,
     productionSourceMap: devNeedCdn,

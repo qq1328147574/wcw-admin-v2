@@ -4,7 +4,7 @@
 let baseUrl, imageUrl;
 
 // const devUrl = "http://pfecfm.natappfree.cc";
-const devUrl = "https://houseofwinners.com";
+const devUrl = "http://23.111.174.82:21152";
 const prodUrl = "https://houseofwinners.com";
 
 switch (process.env.NODE_ENV) {

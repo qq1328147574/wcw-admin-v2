@@ -1,0 +1,58 @@
+.v-card {
+  margin-top: 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  overflow-y: auto;
+
+  .v-title {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e6ebec;
+    font-weight: bold;
+  }
+  .v-item {
+    padding: 5px 10px;
+    display: flex;
+
+    .v-item-inner {
+      width: 100%;
+    }
+
+    .v-item-value {
+      box-sizing: border-box;
+      padding: 0 30px;
+      text-align: center;
+      color: #546e7a !important;
+      .v-item-value-bg {
+        padding: 7px 0;
+        border-radius: 2px;
+        position: relative;
+        font-weight: bold;
+        background: #eceff1;
+        .progress {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          z-index: 0;
+        }
+        span {
+          position: relative;
+          z-index: 1;
+        }
+      }
+    }
+
+    .v-item-label {
+      width: 40px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .v-item-amount {
+      min-width: 80px;
+      font-weight: bold;
+      text-align: right;
+    }
+  }
+}

@@ -5,7 +5,7 @@
     <!-- <Search :formColumnData="formSearchOptions" @result="handleSearchClick" @reset="resetTableData"></Search> -->
 
     <h3 class="v-table-title">
-      {{ $route.params.userName === '0' ? '' : $route.params.userName }} 组织关系图
+      {{ $route.params.userName === '0' ? '' : $route.params.userName }} 组织树形图
     </h3>
 
     <div class="user-container">

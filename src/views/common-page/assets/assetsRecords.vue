@@ -53,7 +53,7 @@
           <el-tag type="danger" class="danger" v-else-if="row.status == -1">失败</el-tag>
         </template>
       </el-table-column>
-      <!-- <el-table-column slot="tableOperaBtn" :label="$t('Users.操作')" fixed="right" min-width="160">
+      <!-- <el-table-column slot="tableOperaBtn" :label="$t('Users.操作')" min-width="160">
         <template slot-scope="{row}">
           <el-button type="text" size="small" icon="el-icon-zoom-in" class="text-success" @click="onOpenDrawer(1, scope.row)" >{{ $t("Users.详细信息") }}</el-button >
         </template>
@@ -79,7 +79,6 @@ export default class Name extends Vue {
   tableColumnData = [
     { prop: "id", label: "ID", width: "160" },
     { prop: "userName", label: this.vm.$t("Users.用户名"), width: "140" },
-    // { prop: "showCoinName", label: '钱包类型', width: "140" },
     { prop: "amount", label: "数量", width: "140" },
     { prop: "recordType", label: "记录类型", width: "140" },
     { slot: "status" },

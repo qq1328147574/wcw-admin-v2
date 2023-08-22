@@ -15,20 +15,22 @@
       default-expand-all
     >
       <template slot="toolbar">
-        <el-button :size="currentWindow ? 'small' : 'mini'" type="primary" icon="el-icon-circle-plus-outline" @click="openDialog(0, null)" >{{ $t("Powers.添加菜单") }}</el-button>
-        <el-button :size="currentWindow ? 'small' : 'mini'" type="warning" icon="el-icon-sunny" :loading="toolbarBtnLoading" @click="handleInitResource()" >{{ $t("Powers.初始化资源") }}</el-button>
+        <div class="flex align-center">
+          <el-button :size="currentWindow ? 'small' : 'mini'" type="primary" icon="el-icon-circle-plus-outline" @click="openDialog(0, null)" >{{ $t("Powers.添加菜单") }}</el-button>
+          <el-button :size="currentWindow ? 'small' : 'mini'" type="warning" icon="el-icon-sunny" :loading="toolbarBtnLoading" @click="handleInitResource()" >{{ $t("Powers.初始化资源") }}</el-button>
 
-        <span style="padding: 0 15px;">系统开启: </span>
-        <el-switch
-          v-model="apiStatus"
-          :active-text="$t('System.开启')"
-          :inactive-text="$t('System.关闭')"
-          class="padding-right15"
-          :inactive-value="-1"
-          :active-value="1"
-          @change="handleOpenApi"
-        >
-        </el-switch>
+          <span style="padding: 0 15px;">系统开启: </span>
+          <el-switch
+            v-model="apiStatus"
+            :active-text="$t('System.开启')"
+            :inactive-text="$t('System.关闭')"
+            class="padding-right15"
+            :inactive-value="-1"
+            :active-value="1"
+            @change="handleOpenApi"
+          >
+          </el-switch>
+        </div>
       </template>
       <el-table-column slot="tableMainType" :label="$t('Powers.类型')" :min-width="'140'" >
         <template slot-scope="{row}">

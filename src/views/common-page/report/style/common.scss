@@ -1,0 +1,55 @@
+.report {
+  padding: 10px;
+}
+.v-card-wrap {
+  padding: 5px;
+}
+.v-card {
+  margin: 1px;
+  padding: 10px;
+  border-radius: 3px;
+  background: #fff;
+  
+  &.first-child {
+    margin-top: 0;
+  }
+  /*
+    color: #607d8b;
+  */
+  .v-title {
+    line-height: 26px;
+    font-size: 16px;
+    text-align: center;
+  }
+  .v-value {
+    .v-value-item {
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+
+      .center {
+        text-align: center;
+      }
+    }
+  }
+  .v-text {
+    text-align: center;
+    line-height: 32px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+  }
+}
+
+.v-primary {
+  color: #00b0f0 !important;
+}
+.v-warning {
+  color: #e6a23c !important;
+}
+.v-success {
+  color: #67c23a !important;
+}
+.v-danger {
+  color: #f56c6c !important;
+}

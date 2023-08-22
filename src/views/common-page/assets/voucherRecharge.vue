@@ -120,7 +120,9 @@ export default class Name extends Vue {
     reason: '',
     status: '0',
     timeType: '1',
-    voucher: ''
+    voucher: '',
+    amount: '',
+    userName: ''
   };
   rules: object = {
     status: [

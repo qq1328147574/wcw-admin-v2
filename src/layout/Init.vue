@@ -17,7 +17,7 @@
 
       <!-- 内容 -->
       <div class="init-inner flex-column ">
-        <HeaderBar @onThemeColorClick="onThemeColorClick"></HeaderBar>
+        <HeaderBar @onThemeColorClick="onThemeColorClick" v-if="$route.path != '/live-tickets'"></HeaderBar>
 
         <div class="page-view flex-1" id="base-content">
           <router-view></router-view>

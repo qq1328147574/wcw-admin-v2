@@ -19,7 +19,7 @@
           <el-tag type="info" effect="dark" size="small" v-else>禁止</el-tag>
         </template>
       </el-table-column>
-      <el-table-column slot="tableOperaBtn" :label="$t('Users.操作')" fixed="right" align="center" min-width="160">
+      <el-table-column slot="tableOperaBtn" :label="$t('Users.操作')" align="center" min-width="160">
         <template slot-scope="{row}">
           <el-button type="text" size="small" icon="el-icon-edit-outline" class="text-success" @click="onOpenDialog(2, row)"> 修改 </el-button >
         </template>
@@ -142,9 +142,9 @@ export default class Name extends Vue {
     }
 
     if (type === 1) {
-      this.dialogTitle = '添加配置'
+      this.dialogTitle = '修改资产'
     } else {
-      this.dialogTitle = '修改配置'
+      this.dialogTitle = '修改资产'
     }
     
     this.dialogType = type;

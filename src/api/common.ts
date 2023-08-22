@@ -176,11 +176,29 @@ export const webGetAdminUpdateBetConfig = params => service.post('/api/back/bet/
 export const webGetAdminMemberToMemberOrder = params => service.post('/api/back/transfer/transferAccountsOrderList', {data: params, needEn: true});
 
 // 手动提款订单
-export const webGetAdminWithdrawOrder = params => service.post('/api/back/manual/withdrawal/withdrawalOrderList', {data: params, needEn: true});
+export const webGetAdminWithdrawOrder = params => service.post('/api/back/manual/withdrawal/withdrawalOrderList', {data: params, needEn: true, notLoading: params.notLoading});
 // 审核提币
 export const webGetAdminCheckWithdrawOrder = params => service.post('/api/back/manual/withdrawal/examine', {data: params, needEn: true});
 
 // 后台审核凭证充值
 export const webGetAdminVoucherExamine = params => service.post('/api/back/voucher/examine', {data: params, needEn: true});
 // 后台查询凭证充值记录
-export const webGetAdminVoucherOrder = params => service.post('/api/back/voucher/orderList', {data: params, needEn: true});
+export const webGetAdminVoucherOrder = params => service.post('/api/back/voucher/orderList', {data: params, needEn: true, notLoading: params.notLoading});
+
+// 后台查询业绩
+export const webGetPerformanceList = params => service.post('/api/back/assets/performanceList', {data: params, needEn: true});
+
+// 后台总板块报告
+export const queryTotalReport = params => service.post('/api/back/report/totalReport', {data: params, needEn: true});
+// 后台总游戏记录列表
+export const queryTotalGameRecords = params => service.post('/api/back/report/totalAssetsPerformanceReport', {data: params, needEn: true});
+// 后台会员游戏记录列表
+export const queryMemGameRecords = params => service.post('/api/back/report/memberAssetsPerformanceReport', {data: params, needEn: true});
+// 后台会员板块报告
+export const queryMemberReport = params => service.post('/api/back/report/memberReport', {data: params, needEn: true});
+// 后台会员资产记录列表
+export const queryAssetsRecords = params => service.post('/api/back/report/totalAssetsRecordList', {data: params, needEn: true});
+
+
+// 后台检测待审核订单
+export const checkBankNotExamineOrder = params => service.post('/api/back/report/checkWait', {data: params, needEn: true, notLoading: params.notLoading});

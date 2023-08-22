@@ -27,6 +27,17 @@ service.interceptors.request.use(
     config.headers['login-type'] = 'ADMIN';
     config.headers['content-type'] = "application/json;charset=utf-8";
     config.headers['accept-language'] = sessionStorage.getItem('accessLocaleI18n') || 'zh-CN';
+
+
+    if(!config.data.notLoading) {
+      loading = window['vm'].$loading({
+        lock: true,
+        text: '',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.6)',
+        customClass: 'loading-class'
+      });
+    }
     
     // 加密发送的数据 needEn: 是否需要加密 [true | false]
     if(config.data.needEn) {
@@ -34,14 +45,6 @@ service.interceptors.request.use(
     } else {
       config.data = config.data.data;
     }
-
-    loading = window['vm'].$loading({
-      lock: true,
-      text: '',
-      spinner: 'el-icon-loading',
-      background: 'rgba(0, 0, 0, 0.6)',
-      customClass: 'loading-class'
-    });
     
     return config;
 

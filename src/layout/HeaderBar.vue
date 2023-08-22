@@ -25,6 +25,9 @@
           <i class="el-icon-magic-stick small-window-icon"></i>
         </el-tooltip>
       </div> -->
+      <div class="v-right-item pointer" @click="openLiveTickets">
+        实时交易
+      </div>
       <!-- 语言 -->
       <div class="v-right-item">
         <el-dropdown trigger="click" @command="handleLanguageCommand" size="medium">
@@ -154,6 +157,15 @@ export default class HeaderBar extends Vue {
   // 退出登录
   async userLogout() {
   };
+
+  openLiveTickets() {
+    const { href } = this.$router.resolve({
+      path: "/live-tickets",
+    });
+    let windowWidth = window.innerWidth - 100;
+    let windowHeight = window.innerHeight - 100;
+    window.open(href, "_blank", `width=${windowWidth}, height=${windowHeight}`);
+  }
 
 }
 </script>

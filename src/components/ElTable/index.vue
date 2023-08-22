@@ -1,6 +1,6 @@
 <template>
   <div class="table-box">
-    <div class="toolbar">
+    <div class="toolbar" v-if="needToolbar">
       <div class="btn-left-box">
         <slot name="toolbar"></slot>
       </div>
@@ -38,15 +38,40 @@
         :height="tableHeight"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="index" width="50" label="#"></el-table-column>
+        <!-- <el-table-column type="index" width="50" label="#"></el-table-column> -->
         <template v-for="(column, index) in tableColumnData">
           <!--复选框（START）-->
           <el-table-column
             v-if="column.type == 'selection'"
             type="selection"
-            :min-width="column.width ? column.width : 50"
+            :min-width="column.width"
             :key="index"
           >
+          </el-table-column>
+          <el-table-column
+            v-if="column.type == 'index'"
+            type="index"
+            :min-width="column.width"
+            :label="column.label"
+            :key="index"
+          >
+          </el-table-column>
+
+          <el-table-column
+            v-else-if="column.type == 'image'"
+            :min-width="column.width"
+            :label="column.label"
+            :key="index"
+          >
+            <template slot-scope="{ row }">
+              <el-image
+                v-if="row[column.prop]"
+                :src="row[column.prop]"
+                :preview-src-list="[row[column.prop]]"
+                style="width: 100%; height: 80px;"
+                fit="cover"
+              ></el-image>
+            </template>
           </el-table-column>
 
           <!-- 操作列/自定义列  slot 添加自定义配置项 -->
@@ -54,10 +79,22 @@
 
           <!-- 默认渲染列-渲染每一列的汉字 -->
           <el-table-column
+            :label="column.label"
+            :min-width="column.width"
+            :show-overflow-tooltip="false"
+            :key="column.id || index"
+            v-else-if="column.type === 'user'"
+          >
+            <template slot-scope="{row}">
+              <span style="color: #009688; font-weight: 600;">{{ row[column.prop] }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column
             :prop="column.prop"
             :label="column.label"
             :min-width="column.width"
-            :show-overflow-tooltip="true"
+            :show-overflow-tooltip="false"
             :key="column.id || index"
             v-else
           >
@@ -96,9 +133,10 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch, Emit } from "vue-property-decorator";
 import { UserStore } from "@/store/private/user";
-import { sessionData } from "@/filters/storage";
-
+import { localData } from "@/filters/storage";
 import ExportExcels from "../ExportExcels/index.vue";
+
+
 
 @Component({
   name: "ElTables",
@@ -118,6 +156,9 @@ export default class ElTable extends Vue {
   @Prop({ default: true }) needRefresh: boolean;
   @Prop({ default: false }) tableExcelType: boolean; // 导出状态
   @Prop({ default: [] }) tableColumnExcelData: Array<object>; // 导出表头
+  @Prop({ default: false }) needTableHeight: boolean; // 是否需要设置高度
+  @Prop({ default: false }) heightHalf: boolean; // 一半高度
+  @Prop({ default: true }) needToolbar: boolean;
 
   currentPage: number = 1;
   loadingType: boolean = false;
@@ -126,6 +167,8 @@ export default class ElTable extends Vue {
   excelHeader: any = [];
   excelKeys: any = [];
   excelsName: string = "";
+  
+
 
   @Emit("handleSelectionChange")
   handleSelectionChange(val): void {
@@ -138,35 +181,41 @@ export default class ElTable extends Vue {
     return val;
   }
 
-  tableHeight: string = '';
+  tableHeight: string = "";
 
   pageCount: number = 7;
 
   // 生命周期
   mounted() {
-    this.getTableHeight();
-    window.addEventListener("resize", ()=> {
+    if(!this.needTableHeight) {
       this.getTableHeight();
+      window.addEventListener("resize", () => {
+        this.getTableHeight();
 
-      let winWidth = window.innerWidth;
+        let winWidth = window.innerWidth;
 
-      if(winWidth <= 768) {
-        this.pageCount = 3;
-      } else {
-        this.pageCount = 7;
-      }
-    });
+        if (winWidth <= 768) {
+          this.pageCount = 3;
+        } else {
+          this.pageCount = 7;
+        }
+      });
+    }
   }
 
   getTableHeight() {
-    let winHeight = window.innerHeight;
-    let search = (document.getElementById('search') as any);
-    if(search) {
-      let tableHeight = winHeight - search.offsetHeight - 50 - 50 - 50 + 'px';
-      this.tableHeight = tableHeight;
+    if(this.heightHalf) {
+      this.tableHeight = window.innerHeight / 2 - 50 - 50 + 'px';
     } else {
-      let tableHeight = winHeight - 50 - 50 - 50 + 'px';
-      this.tableHeight = tableHeight;
+      let winHeight = window.innerHeight;
+      let search = document.getElementById("search") as any;
+      if (search) {
+        let tableHeight = winHeight - search.offsetHeight - 50 - 50 - 50 + "px";
+        this.tableHeight = tableHeight;
+      } else {
+        let tableHeight = winHeight - 50 - 50 - 50 + "px";
+        this.tableHeight = tableHeight;
+      }
     }
     
   }
