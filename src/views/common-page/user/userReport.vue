@@ -13,13 +13,13 @@
             </div>
             <div class="flex flex-column align-center" style="margin-top: 20px;">
               <el-date-picker class="picker" v-model="selectData" type="datetimerange" unlink-panels
-                range-separator="-" start-placeholder="开始时间" end-placeholder="结束时间"
+                range-separator="-" :start-placeholder="$t('Report.开始时间')" :end-placeholder="$t('Report.结束时间')"
                 :value-format="'yyyy-MM-dd HH:mm:ss'" @change="selectTime">
               </el-date-picker>
 
               <div style="margin-top: 20px;">
-                <el-button type="primary" size="medium" @click="getReport">搜索</el-button>
-                <el-button type="button" size="medium" @click="resetTableData">重置</el-button>
+                <el-button type="primary" size="medium" @click="getReport">{{ $t('Report.搜索') }}</el-button>
+                    <el-button type="button" size="medium" @click="resetTableData">{{ $t('Report.重置') }}</el-button>
               </div>
             </div>
           </div>
@@ -31,31 +31,31 @@
             </div>
             <div class="v-card-bd">
               <div class="v-card-bd-item flex align-center">
-                <div class="label">总充值</div>
+                <div class="label">{{ $t('Report.总充值') }}</div>
                 <div class="value center success">
-                  {{ memberReport.memberDepositAmount }}
+                  {{ memberReport.memberDepositAmount }}({{ memberReport.memberDepositCount }}次)
                 </div>
               </div>
               <div class="v-card-bd-item flex align-center">
-                <div class="label">总提款</div>
+                <div class="label">{{ $t('Report.总提款') }}</div>
                 <div class="value center danger">
-                  {{ memberReport.memberWithdrawAmount }}
+                  {{ memberReport.memberWithdrawAmount }}({{ memberReport.memberWithdrawCount }}次)
                 </div>
               </div>
               <div class="v-card-bd-item flex align-center">
-                <div class="label">总奖励</div>
+                <div class="label">{{ $t('Report.总奖励') }}</div>
                 <div class="value center warning">
                   {{ memberReport.memberRewardAmount }}
                 </div>
               </div>
               <div class="v-card-bd-item flex align-center">
-                <div class="label">总赢金额</div>
+                <div class="label">{{ $t('Report.总赢金额') }}</div>
                 <div class="value center success">
                   {{ memberReport.memberWinAmount }}
                 </div>
               </div>
               <div class="v-card-bd-item flex align-center">
-                <div class="label">总输金额</div>
+                <div class="label">{{ $t('Report.总输金额') }}</div>
                 <div class="value center danger">
                   {{ memberReport.memberLossAmount }}
                 </div>
@@ -69,11 +69,11 @@
     <div class="tabs flex" style="margin-top: 20px;">
       <div class="pointer" :class="{ 'select': currentTab === 0 }" @click="currentTab = 0">
         <ticket-one theme="outline" size="20" fill="#fff" style="padding-right: 10px;" />
-        交易记录
+        {{ $t('Report.交易记录') }}
       </div>
       <div class="pointer" :class="{ 'select': currentTab === 1 }" @click="currentTab = 1">
         <gift theme="outline" size="20" fill="#fff" style="padding-right: 10px;" />
-        游戏记录
+        {{ $t('Report.游戏记录') }}
       </div>
     </div>
     <div class="">
@@ -83,21 +83,21 @@
 
         <div slot="toolbar" class="flex">
           <el-date-picker class="picker" v-model="selectData2" type="datetimerange" unlink-panels
-            range-separator="-" start-placeholder="开始时间" end-placeholder="结束时间"
+            range-separator="-" :start-placeholder="$t('Report.开始时间')" :end-placeholder="$t('Report.结束时间')"
             :value-format="'yyyy-MM-dd HH:mm:ss'" @change="selectTime2">
           </el-date-picker>
 
-          <el-button type="button" size="medium" @click="resetTableData2">重置</el-button>
+          <el-button type="button" size="medium" @click="resetTableData2">{{ $t('Report.重置') }}</el-button>
         </div>
         <el-table-column slot="status" :label="$t('Assets.状态')" min-width="120">
           <template slot-scope="{row}">
-            <el-tag type="primary" class="primary" v-if="row.status === 1">待审核</el-tag>
-            <el-tag type="success" class="success" v-else-if="row.status === 0">成功</el-tag>
-            <el-tag type="success" class="success" v-else-if="row.status === 2">审核通过</el-tag>
-            <el-tag type="danger" class="danger" v-else-if="row.status === 3">审核拒绝</el-tag>
-            <el-tag type="success" class="success" v-else-if="row.status === 4">转账中</el-tag>
-            <el-tag type="danger" class="danger" v-else-if="row.status === 5">未接收</el-tag>
-            <el-tag type="danger" class="danger" v-else>失败</el-tag>
+            <el-tag type="primary" class="primary" v-if="row.status === 1">{{ $t('Report.待审核') }}</el-tag>
+              <el-tag type="success" class="success" v-else-if="row.status === 0">{{ $t('Report.成功') }}</el-tag>
+              <el-tag type="success" class="success" v-else-if="row.status === 2">{{ $t('Report.审核通过') }}</el-tag>
+              <el-tag type="danger" class="danger" v-else-if="row.status === 3">{{ $t('Report.审核拒绝') }}</el-tag>
+              <el-tag type="success" class="success" v-else-if="row.status === 4">{{ $t('Report.转账中') }}</el-tag>
+              <el-tag type="danger" class="danger" v-else-if="row.status === 5">{{ $t('Report.未接收') }}</el-tag>
+              <el-tag type="danger" class="danger" v-else>{{ $t('Report.失败') }}</el-tag>
           </template>
         </el-table-column>
       </ElTable>
@@ -106,15 +106,15 @@
         :totalCount="totalCount3" :totalPageSize="params3.pageSize" :needTableHeight="false"
         @refreshTableChange="refreshTableData3" @handleCurrentChange="handleCurrentChange3" v-show="currentTab === 1">
       
-        <el-table-column slot="gameType" label="游戏类型" min-width="160">
+        <el-table-column slot="gameType" :label="$t('Report.游戏类型')" min-width="160">
           <template slot-scope="{row}">
             {{ gameType[row.gameType] }}
           </template>
         </el-table-column>
-        <el-table-column slot="game" label="游戏" min-width="160">
+        <el-table-column slot="game" :label="$t('Report.游戏')" min-width="160">
           <template slot-scope="{row}" >
-            <template v-if="row.imageUrl">
-              <el-image :src="row.imageUrl.includes('http') ? row.imageUrl : 'http' + row.imageUrl" style="height: 80px;"></el-image>
+            <template v-if="row.gameImg">
+              <el-image :src="row.gameImg.includes('http') ? row.gameImg : 'http' + row.gameImg" style="height: 80px;"></el-image>
             </template>
             <template v-else>
               <el-image :src="require(`../../../assets/img/game/${row.gameType}-${row.productId}.png`)" style="height: 80px;"></el-image>
@@ -177,10 +177,10 @@ export default class CardList extends Vue {
   tableData2: any[] = [];
   tableColumnData2 = [
     { prop: "id", label: "ID", width: "160" },
-    { prop: "amount", label: "数量", width: "140" },
-    { prop: "recordType", label: "记录类型", width: "140" },
+    { prop: "amount", label: this.vm.$t('Report.数量'), width: "140" },
+    { prop: "recordType", label: this.vm.$t('Report.记录类型'), width: "140" },
     { slot: "status" },
-    { prop: "createTime", label: "创建时间", width: "160" },
+    { prop: "createTime", label: this.vm.$t('Report.创建时间'), width: "160" },
   ];
   totalCount2 = 0;
   totalCount3 = 0;
@@ -206,11 +206,11 @@ export default class CardList extends Vue {
   tableData3: any[] = [];
   tableColumnData3 = [
     { prop: "id", label: 'ID', width: "160" },
-    { slot: "gameType", width: "160" },
-    { slot: "game", width: "160" },
-    { prop: "changeType", label: '类型', width: "160" },
-    { prop: "txAmount", label: '金额', width: "160" },
-    { prop: "createTime", label: '创建时间', width: "160" },
+    { slot: "gameType", width: "140" },
+    { slot: "game", width: "140" },
+    { prop: "changeType", label: this.vm.$t('Report.类型'), width: "160" },
+    { prop: "txAmount", label: this.vm.$t('Report.金额'), width: "160" },
+    { prop: "createTime", label: this.vm.$t('Report.创建时间'), width: "160" },
   ];
 
   selectData = [
@@ -223,12 +223,12 @@ export default class CardList extends Vue {
     endTime
   ]
 
-  userName: string = '';
+  userName: string = "";
 
   gameType = {
-    '1': '老虎机',
-    '2': '真人娱乐场',
-    '3': '体育博彩'
+    '1': this.vm.$t('Report.老虎机'),
+    '2': this.vm.$t('Report.真人娱乐场'),
+    '3': this.vm.$t('Report.体育博彩')
   }
 
   gameName = {
@@ -296,8 +296,6 @@ export default class CardList extends Vue {
     this.params['endTime'] = val[1];
     this.params2['startTime'] = val[0];
     this.params2['endTime'] = val[1];
-
-    
 
     this.getMemberReport();
     this.initGetDataList();

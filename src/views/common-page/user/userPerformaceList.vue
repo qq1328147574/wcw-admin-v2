@@ -19,18 +19,18 @@
     >
       <el-table-column
         slot="status"
-        label="状态"
+        :label="$t('Users.状态')"
         align="center"
         min-width="140"
       >
         <template slot-scope="{ row }">
-          <el-tag type="primary" class="primary" v-if="row.status === 1">待审核</el-tag>
-          <el-tag type="success" class="success" v-else-if="row.status === 0">成功</el-tag>
-          <el-tag type="success" class="success" v-else-if="row.status === 2">审核通过</el-tag>
-          <el-tag type="danger" class="danger" v-else-if="row.status === 3">审核拒绝</el-tag>
-          <el-tag type="success" class="success" v-else-if="row.status === 4">转账中</el-tag>
-          <el-tag type="danger" class="danger" v-else-if="row.status === 5">未接收</el-tag>
-          <el-tag type="danger" class="danger" v-else-if="row.status == -1">失败</el-tag>
+          <el-tag type="primary" class="primary" v-if="row.status === 1">{{ $t('Users.待审核') }}</el-tag>
+          <el-tag type="success" class="success" v-else-if="row.status === 0">{{ $t('Users.成功') }}</el-tag>
+          <el-tag type="success" class="success" v-else-if="row.status === 2">{{ $t('Users.审核通过') }}</el-tag>
+          <el-tag type="danger" class="danger" v-else-if="row.status === 3">{{ $t('Users.审核拒绝') }}</el-tag>
+          <el-tag type="success" class="success" v-else-if="row.status === 4">{{ $t('Users.转账中') }}</el-tag>
+          <el-tag type="danger" class="danger" v-else-if="row.status === 5">{{ $t('Users.未接收') }}</el-tag>
+          <el-tag type="danger" class="danger" v-else-if="row.status == -1">{{ $t('Users.失败') }}</el-tag>
         </template>
       </el-table-column>
     </ElTable>
@@ -54,8 +54,8 @@ export default class Name extends Vue {
   tableColumnData = [
     // { prop: "userId", label: '用户ID', width: "140" },
     { prop: "userName", label: this.vm.$t("Users.用户名"), width: "140" },
-    { prop: "daily", label: "今日业绩", width: "140" },
-    { prop: "weekly", label: "本周业绩", width: "140" },
+    { prop: "daily", label: this.vm.$t('Users.今日业绩'), width: "140" },
+    { prop: "weekly", label: this.vm.$t('Users.本周业绩'), width: "140" },
   ];
   totalCount: number = 0;
   param: any = { page: 1, pageSize: 14 };
@@ -67,10 +67,10 @@ export default class Name extends Vue {
   // 搜索项配置
   get formSearchOptions() {
     return [
-      { key: "userName", type: "input", label: "用户名" },
-      { key: "phone", type: "input", label: "电话" },
-      { key: "startTime", type: "time", label: "开始日期", placeholder: "请选择", },
-      { key: "endTime", type: "time", label: "结束日期", placeholder: "请选择" },
+      { key: "userName", type: "input", label: this.vm.$t('Users.用户名') },
+      { key: "phone", type: "input", label: this.vm.$t('Users.电话') },
+      { key: "startTime", type: "time", label: this.vm.$t('Users.开始日期'), placeholder: this.vm.$t('Users.请选择'), },
+      { key: "endTime", type: "time", label: this.vm.$t('Users.结束日期'), placeholder: this.vm.$t('Users.请选择') },
     ];
   }
 
@@ -117,7 +117,7 @@ export default class Name extends Vue {
   handleSearchClick(val) {
     let { offline, userName } = val;
     if (offline && !userName) {
-      this.$message.error("请输入用户名");
+      this.$message.error(this.vm.$t('Users.请输入用户名'));
       return;
     }
 

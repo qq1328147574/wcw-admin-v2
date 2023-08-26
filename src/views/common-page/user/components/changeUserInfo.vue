@@ -12,35 +12,35 @@
       <el-form-item :label="$t('Users.用户名')" prop="userName">
         <el-input v-model="formData.userName"></el-input>
       </el-form-item>
-      <el-form-item label="全名" prop="passWord">
+      <el-form-item :label="$t('Users.全名')" prop="passWord">
         <el-input v-model="formData.fullName"></el-input>
       </el-form-item>
       <el-form-item :label="$t('Users.邮箱')" prop="email">
         <el-input v-model="formData.email"></el-input>
       </el-form-item>
-      <el-form-item label="手机" prop="phone">
+      <el-form-item :label="$t('Users.手机')" prop="phone">
         <el-input v-model="formData.phone"></el-input>
       </el-form-item>
-      <el-form-item label="生日" prop="birthdayTime">
+      <el-form-item :label="$t('Users.生日')" prop="birthdayTime">
         <el-date-picker
           v-model="formData.birthdayTime"
           type="date"
-          placeholder="出生日期"
+          :placeholder="$t('Users.出生日期')"
           value-format="yyyy-MM-dd hh:mm:ss"
           format="yyyy-MM-dd"
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="银行" prop="bankName">
+      <el-form-item :label="$t('Users.银行')" prop="bankName">
         <el-input v-model="formData.bankName"></el-input>
       </el-form-item>
-      <el-form-item label="银行帐户名" prop="bankAcctName">
+      <el-form-item :label="$t('Users.银行帐户名')" prop="bankAcctName">
         <el-input v-model="formData.bankAcctName"></el-input>
       </el-form-item>
-      <el-form-item label="银行帐户号码" prop="bankAcctNo">
+      <el-form-item :label="$t('Users.银行帐户号码')" prop="bankAcctNo">
         <el-input v-model="formData.bankAcctNo"></el-input>
       </el-form-item>
-      <el-form-item label="登录密码" prop="passWord">
+      <el-form-item :label="$t('Users.登录密码')" prop="passWord">
         <el-input
           type="password"
           show-password
@@ -85,25 +85,25 @@ export default class Name extends Vue {
   };
   rules: object = {
     email: [
-      { required: true, message: "请输入邮箱", trigger: "blur" },
+      { required: true, message: this.vm.$t('Users.请输入邮箱'), trigger: "blur" },
       {
         type: "email",
-        message: "请输入正确的邮箱",
+        message: this.vm.$t('Users.请输入正确的邮箱'),
         trigger: ["change", "blur"],
       },
     ],
     userName: [
-      { required: true, message: "请输入用户名", trigger: "blur" },
-      { pattern: regBlank, message: "不能含有空格", trigger: "blur" },
+      { required: true, message: this.vm.$t('Users.请输入用户名'), trigger: "blur" },
+      { pattern: regBlank, message: this.vm.$t('Users.不能含有空格'), trigger: "blur" },
     ],
     passWord: [
-      { pattern: regBlank, message: "不能含有空格", trigger: "blur" },
+      { pattern: regBlank, message: this.vm.$t('Users.不能含有空格'), trigger: "blur" },
     ],
     transactionPassword: [
-      { pattern: regBlank, message: "不能含有空格", trigger: "blur" },
+      { pattern: regBlank, message: this.vm.$t('Users.不能含有空格'), trigger: "blur" },
     ],
-    countryCode: [{ required: true, message: "请选择国家", trigger: "blur" }],
-    phone: [{ required: true, message: "请输入手机", trigger: "blur" }],
+    countryCode: [{ required: true, message: this.vm.$t('Users.请选择国家'), trigger: "blur" }],
+    phone: [{ required: true, message: this.vm.$t('Users.请输入手机'), trigger: "blur" }],
   };
   buttonLoading: boolean = false;
 
@@ -166,7 +166,7 @@ export default class Name extends Vue {
       res,
       true,
       true,
-      "修改成功",
+      this.vm.$t('Users.修改成功'),
       () => {
         this.buttonLoading = false;
         this.$emit("result");

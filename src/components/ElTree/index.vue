@@ -36,7 +36,7 @@
 <script lang="ts">
 import { Component, Provide, Vue, Watch, Emit, Prop } from 'vue-property-decorator';
 // import { AdminSystemStore } from '@/store/private/AdminIstrators';
-import { sessionData } from '@/filters/storage';
+import { localData } from '@/filters/storage';
 
 type IndexData = {
   children: string;

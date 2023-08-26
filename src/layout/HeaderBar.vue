@@ -8,7 +8,7 @@
         </div>
       </div>
       <h3 class="header-meta-title">
-        {{ pageTitle }}
+        {{ $t('Common.' + pageTitle) }}
       </h3>
     </div>
     
@@ -26,7 +26,7 @@
         </el-tooltip>
       </div> -->
       <div class="v-right-item pointer" @click="openLiveTickets">
-        实时交易
+        {{ $t('Common.实时交易') }}
       </div>
       <!-- 语言 -->
       <div class="v-right-item">
@@ -35,9 +35,10 @@
             <i class="el-icon-setting icon-size"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="home">控制台</el-dropdown-item>
+            <el-dropdown-item command="home">{{ $t('Common.' + '控制台') }}</el-dropdown-item>
             <el-dropdown-item command="zh-CN">简体中文</el-dropdown-item>
             <el-dropdown-item command="en-US">English</el-dropdown-item>
+            <el-dropdown-item command="ms-MY">Malaysia</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>  
       </div>
@@ -50,7 +51,7 @@
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="logout">
               <logout theme="filled" fill="#000000" class="font-base" /> 
-              退出登录
+              {{ $t('Common.退出登录') }}
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -61,7 +62,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
-import { sessionData } from "@/filters/storage";
+import { localData } from "@/filters/storage";
 import Event from "@/utils/Event";
 import { Logout } from '@icon-park/vue';
 
@@ -72,9 +73,9 @@ import { Logout } from '@icon-park/vue';
 })
 export default class HeaderBar extends Vue {
   hideAfterTip: number = 1000;  // 持续时间
-  langType: any = sessionData("get", "accessLocaleI18n", "") || "en-US";
+  langType: any = localData("get", "accessLocaleI18n", "") || "en-US";
   collapse: boolean = false;
-  userName: any = (sessionData('get', 'adminUser', '') as any).toUpperCase();
+  userName: any = (localData('get', 'adminUser', '') as any).toUpperCase();
 
   get pageTitle() {
     let meta: any = this.$route.meta;
@@ -93,7 +94,7 @@ export default class HeaderBar extends Vue {
 
   // 返回首页
   backHome() {
-    sessionData('clean', 'HasSessionMenuItemId', '');
+    localData('clean', 'HasSessionMenuItemId', '');
     this.$router.replace("/");
   };
 
@@ -119,10 +120,11 @@ export default class HeaderBar extends Vue {
   handleLanguageCommand(e: string) {
     if(e === 'home') {
       this.backHome();
-      sessionData('set', 'HasSessionMenuItemId', '');
+      localData('set', 'HasSessionMenuItemId', '');
 
     } else {
-      sessionData("set", "accessLocaleI18n", e);
+      localData("set", "accessLocaleI18n", e);
+      window.location.reload();
     }
   };
 
@@ -140,11 +142,11 @@ export default class HeaderBar extends Vue {
       type: 'success',
       message: '正在退出登录...',
       onClose: ()=> {
-        sessionData('clean', 'HasSessionToken', '');
-        sessionData('clean', 'HasSessionRouterMap', '');
-        sessionData('clean', 'HasSessionMenuItemId', '');
-        sessionData('clean', 'adminUser', '');
-        let loginType = sessionData('get', 'userLoginType', '');
+        localData('clean', 'HasSessionToken', '');
+        localData('clean', 'HasSessionRouterMap', '');
+        localData('clean', 'HasSessionMenuItemId', '');
+        localData('clean', 'adminUser', '');
+        let loginType = localData('get', 'userLoginType', '');
         if(loginType === 'Admin') {
           this.$router.push('/login')
         } else if(loginType === 'Company'){

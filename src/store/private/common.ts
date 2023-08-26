@@ -1,6 +1,6 @@
 import { Module, VuexModule, Mutation, Action, getModule } from 'vuex-module-decorators'
 import store from '../index'
-import { sessionData } from '@/filters/storage';
+import { localData } from '@/filters/storage';
 
 import { 
   webGetAdminGetCoinList,
@@ -28,7 +28,7 @@ export default class CommonConfig extends VuexModule implements IterCommonConfig
 
   get getCoinName() { 
     let obj = {}
-    let i18n = sessionData('get', 'accessLocaleI18n', '') || 'zh-CN';
+    let i18n = localData('get', 'accessLocaleI18n', '') || 'zh-CN';
     this.coinList.forEach(item=> {
       obj[item.coinName] = i18n === 'zh-CN' ? item.cnName : item.shortName
     })
@@ -36,7 +36,7 @@ export default class CommonConfig extends VuexModule implements IterCommonConfig
   }
 
   get getCountryList() {
-    let i18n = sessionData('get', 'accessLocaleI18n', '') || 'zh-CN';
+    let i18n = localData('get', 'accessLocaleI18n', '') || 'zh-CN';
     return this.countryList.map(item=> {
       return {
         ...item,

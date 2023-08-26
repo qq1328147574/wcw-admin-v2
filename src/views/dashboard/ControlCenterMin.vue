@@ -11,7 +11,7 @@ import scrollReveal from 'scrollreveal';
 import countTo from 'vue-count-to';
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { scrollRevealEffect } from '@/filters/common';
-import { sessionData } from '@/filters/storage';
+import { localData } from '@/filters/storage';
 
 
 @Component({

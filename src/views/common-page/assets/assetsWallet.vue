@@ -13,28 +13,28 @@
       @getExportExcelDataClick="getExportExcelDataClick"
     >
       <!-- <el-button slot="toolbar" type="primary" size="small" icon="el-icon-circle-plus-outline" @click="onOpenDialog(1, null)">空投资产</el-button> -->
-      <el-table-column slot="status" label="状态" align="center" min-width="140">
+      <el-table-column slot="status" :label="$t('Assets.状态')" align="center" min-width="140">
         <template slot-scope="{row}">
-          <el-tag type="primary" effect="dark" size="small" v-if="row.status === 1">正常</el-tag>
-          <el-tag type="info" effect="dark" size="small" v-else>禁止</el-tag>
+          <el-tag type="primary" effect="dark" size="small" v-if="row.status === 1">{{ $t('Assets.正常') }}</el-tag>
+          <el-tag type="info" effect="dark" size="small" v-else>{{ $t('Assets.禁止') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column slot="tableOperaBtn" :label="$t('Users.操作')" align="center" min-width="160">
         <template slot-scope="{row}">
-          <el-button type="text" size="small" icon="el-icon-edit-outline" class="text-success" @click="onOpenDialog(2, row)"> 修改 </el-button >
+          <el-button type="text" size="small" icon="el-icon-edit-outline" class="text-success" @click="onOpenDialog(2, row)"> {{ $t('Assets.修改') }} </el-button >
         </template>
       </el-table-column>
     </ElTable>
     
     <Dialog v-model="dialogVisible" :title="dialogTitle" @close="onCloseDialog">
       <el-form :model="formData" :rules="rules" ref="formData" size="medium" label-width="auto" label-position="left">
-        <el-form-item label="用户名" prop="userName">
+        <el-form-item :label="$t('Assets.用户名')" prop="userName">
           <el-input v-model="formData.userName" :disabled="dialogType == 2"></el-input>
         </el-form-item>
-        <el-form-item label="类型" prop="type">
+        <el-form-item :label="$t('Assets.类型')" prop="type">
           <el-radio-group v-model="formData.type" placeholder="请选择">
-            <el-radio-button label="1">增加</el-radio-button>
-            <el-radio-button label="-1">减少</el-radio-button>
+            <el-radio-button label="1">{{ $t('Assets.增加') }}</el-radio-button>
+            <el-radio-button label="-1">{{ $t('Assets.减少') }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <!-- <el-form-item label="币种" prop="coinName">
@@ -49,11 +49,11 @@
             <el-radio-button label="lock"> 锁仓 </el-radio-button>
           </el-radio-group>
         </el-form-item> -->
-        <el-form-item label="数量" prop="amount">
+        <el-form-item :label="$t('Assets.数量')" prop="amount">
           <el-input type="number" v-model="formData.amount"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-circle-check" @click="submitForm('formData')" :loading="btnLoading"> 提交 </el-button>
+          <el-button type="primary" icon="el-icon-circle-check" @click="submitForm('formData')" :loading="btnLoading"> {{ $t('Assets.提交') }} </el-button>
         </el-form-item>
       </el-form>
     </Dialog>
@@ -81,8 +81,8 @@ export default class Name extends Vue {
   tableData: any[] = []; // 
   tableColumnData = [
     { prop: "id", label: 'ID', width: "140", },
-    { prop: "userName", label: '用户名', width: "140", },
-    { prop: "balance", label: '余额', width: "140" },
+    { prop: "userName", label: this.vm.$t('Assets.用户名'), width: "140", },
+    { prop: "balance", label: this.vm.$t('Assets.余额'), width: "140" },
     { slot: "tableOperaBtn" }
   ];
   totalCount: number = 0;
@@ -113,7 +113,7 @@ export default class Name extends Vue {
       { required: true, message: this.vm.$t("Assets.请输入") + this.vm.$t("Assets.数量"), trigger: 'blur', }
     ],
     assetsType: [
-      { required: true, message: this.vm.$t("Assets.请选择") + '资产类型', trigger: 'blur', }
+      { required: true, message: this.vm.$t("Assets.请选择") + this.vm.$t('Assets.资产类型'), trigger: 'blur', }
     ]
   }
   btnLoading: boolean = false;
@@ -121,7 +121,7 @@ export default class Name extends Vue {
   // 搜索项配置
   get formSearchOptions() {
     return [
-      { type: 'input', key: 'userName', label: '用户名' },
+      { type: 'input', key: 'userName', label: this.vm.$t('Assets.用户名') },
     ]
   }
 
@@ -142,9 +142,9 @@ export default class Name extends Vue {
     }
 
     if (type === 1) {
-      this.dialogTitle = '修改资产'
+      this.dialogTitle = this.vm.$t('Assets.修改资产')
     } else {
-      this.dialogTitle = '修改资产'
+      this.dialogTitle = this.vm.$t('Assets.修改资产')
     }
     
     this.dialogType = type;
@@ -170,7 +170,7 @@ export default class Name extends Vue {
   handleSearchClick(val) {
     let { offline, userName } = val;
     if(offline && !userName) {
-      this.$message.error('请输入用户名');
+      this.$message.error(this.vm.$t('Assets.请输入用户名'));
       return 
     }
     // 重置搜索为第一页
@@ -239,10 +239,10 @@ export default class Name extends Vue {
   
   // 点击删除
   onClickDelete(row) {
-    const text = '此操作将删除该配置';
-    const text1 = '提示';
-    const text2 = '确定';
-    const text3 = '取消';
+    const text = this.vm.$t('Assets.此操作将删除该配置');
+    const text1 = this.vm.$t('Assets.提示');
+    const text2 = this.vm.$t('Assets.确定');
+    const text3 = this.vm.$t('Assets.取消');
 
     this.$confirm(text, text1, {
       confirmButtonText: text2,
@@ -259,7 +259,7 @@ export default class Name extends Vue {
     const res = await webGetAdminAirdropAssets({
       ...this.formData,
     });
-    MessageTips(res, true, true, '空投成功', () => {
+    MessageTips(res, true, true, this.vm.$t('Assets.空投成功'), () => {
       this.getTableData();
       this.btnLoading = false;
       this.dialogVisible = false;
@@ -273,7 +273,7 @@ export default class Name extends Vue {
     const res = await webGetAdminAirdropAssets({
       ...this.formData,
     });
-    MessageTips(res, true, true, '空投成功', () => {
+    MessageTips(res, true, true, this.vm.$t('Assets.空投成功'), () => {
       this.getTableData();
       this.btnLoading = false;
     }, (err) => {

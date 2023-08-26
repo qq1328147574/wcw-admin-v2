@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator";
-import { sessionData } from "@/filters/storage";
+import { localData } from "@/filters/storage";
 import { UserStore } from '@/store/private/user';
 import Event from "@/utils/Event";
 import navMenuData from '@/router/navbar';
@@ -31,7 +31,7 @@ import VNavbar from '@/components/VNavbar/index.vue';
 export default class NavBar extends Vue {
   collapse = false;
   activeIndex: string = "";
-  activeLocale: string = (sessionData("get", "accessLocaleI18n", "") as string) || "zh-CN";
+  activeLocale: string = (localData("get", "accessLocaleI18n", "") as string) || "zh-CN";
   
   navMenuListData: any = [];           // 左侧菜单
   routeStatusType: boolean = false;    // 判断是否是手动点击前进后退
@@ -57,7 +57,7 @@ export default class NavBar extends Vue {
     if(newVal.path === '/control/center') this.activeIndex = "";  // 首页
     if(this.routeStatusType) this.routeStatusType = false;
     else {
-      const sessionRouterId: any = sessionData('get', 'HasSessionMenuItemId', '');
+      const sessionRouterId: any = localData('get', 'HasSessionMenuItemId', '');
       if(this.activeIndex === '') {
         if(sessionRouterId != null) {  // 有刷新
           this.getNavsMenuItemData();
@@ -72,9 +72,9 @@ export default class NavBar extends Vue {
 
   created() {
     // 初始化
-    const sessionRouterId: any = sessionData('get', 'HasSessionMenuItemId', '');
-    const getLocaleI18n: any = sessionStorage.getItem('accessLocaleI18n');
-    const adminUsername: any = sessionData('get', 'adminUser', '');
+    const sessionRouterId: any = localData('get', 'HasSessionMenuItemId', '');
+    const getLocaleI18n: any = localStorage.getItem('accessLocaleI18n');
+    const adminUsername: any = localData('get', 'adminUser', '');
     
     if(sessionRouterId === null) {
       this.getNavsMenuItemData();
@@ -126,7 +126,7 @@ export default class NavBar extends Vue {
    * @return {*}
    */
   getNavsMenuItemData() {
-    const routerData: any = sessionData('get', 'HasSessionRouterMap', ''); // 获取并循环 左侧路由数组
+    const routerData: any = localData('get', 'HasSessionRouterMap', ''); // 获取并循环 左侧路由数组
     let navbarData: any = JSON.parse(routerData);
 
     console.log(`初始导航路由:${navbarData}`);

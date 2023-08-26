@@ -12,14 +12,14 @@
       @handleCurrentChange="handleCurrentChange"
       @getExportExcelDataClick="getExportExcelDataClick"
     >
-      <el-table-column slot="status" label="状态" align="center" min-width="140">
+      <el-table-column slot="status" :label="$t('Assets.状态')" align="center" min-width="140">
         <template slot-scope="{row}">
-          <el-tag type="primary" effect="dark" size="small" v-if="row.status === 1">待审核</el-tag>
-          <el-tag type="success" effect="dark" size="small" v-else-if="row.status === 0">成功</el-tag>
-          <el-tag type="danger" effect="dark" size="small" v-else-if="row.status === 3">审核拒绝</el-tag>
+          <el-tag type="primary" effect="dark" size="small" v-if="row.status === 1">{{ $t('Assets.待审核') }}</el-tag>
+          <el-tag type="success" effect="dark" size="small" v-else-if="row.status === 0">{{ $t('Assets.成功') }}</el-tag>
+          <el-tag type="danger" effect="dark" size="small" v-else-if="row.status === 3">{{ $t('Assets.审核拒绝') }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column slot="voucher" label="凭证" align="center" min-width="140">
+      <el-table-column slot="voucher" :label="$t('Assets.凭证')" align="center" min-width="140">
         <template slot-scope="{row}">
           <el-image
               style="width: 60px; height: 60px;"
@@ -33,20 +33,20 @@
       </el-table-column>
       <el-table-column slot="tableOperaBtn" :label="$t('Users.操作')" align="center" min-width="160">
         <template slot-scope="{row}">
-          <el-button type="text" size="small" icon="el-icon-edit-outline" class="text-success" v-if="row.status === 1" @click="onOpenDialog(2, row)"> 审核 </el-button >
+          <el-button type="text" size="small" icon="el-icon-edit-outline" class="text-success" v-if="row.status === 1" @click="onOpenDialog(2, row)"> {{ $t('Assets.审核') }} </el-button >
         </template>
       </el-table-column>
     </ElTable>
     
     <Dialog v-model="dialogVisible" :title="dialogTitle" @close="onCloseDialog" @confirm="submitForm">
       <el-form :model="formData" :rules="rules" ref="formData" size="medium" label-width="auto" label-position="top" v-if="dialogVisible">
-        <el-form-item label="用户名" prop="userName">
+        <el-form-item :label="$t('Assets.用户名')" prop="userName">
           <el-input v-model="formData.userName" disabled></el-input>
         </el-form-item>
-        <el-form-item label="金额" prop="amount">
+        <el-form-item :label="$t('Assets.金额')" prop="amount">
           <el-input v-model="formData.amount" disabled></el-input>
         </el-form-item>
-        <el-form-item label="凭证" prop="voucher">
+        <el-form-item :label="$t('Assets.凭证')" prop="voucher">
           <el-image
             style="width: 120px; height: 120px;"
             class="game-img"
@@ -55,19 +55,19 @@
             :preview-src-list="[imageUrl + formData.voucher]"
           ></el-image>
         </el-form-item>
-        <el-form-item label="时间" prop="timeType">
-          <el-radio-group v-model="formData.timeType" placeholder="请选择">
-            <el-radio-button label="1">白天</el-radio-button>
-            <el-radio-button label="2">夜间</el-radio-button>
+        <el-form-item :label="$t('Assets.时间')" prop="timeType">
+          <el-radio-group v-model="formData.timeType" :placeholder="$t('Assets.请选择')">
+            <el-radio-button label="1">{{ $t('Assets.白天') }}</el-radio-button>
+            <el-radio-button label="2">{{ $t('Assets.夜间') }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="类型" prop="status">
-          <el-radio-group v-model="formData.status" placeholder="请选择">
-            <el-radio-button label="0">通过</el-radio-button>
-            <el-radio-button label="3">拒绝</el-radio-button>
+        <el-form-item :label="$t('Assets.类型')" prop="status">
+          <el-radio-group v-model="formData.status" :placeholder="$t('Assets.请选择')">
+            <el-radio-button label="0">{{ $t('Assets.通过') }}</el-radio-button>
+            <el-radio-button label="3">{{ $t('Assets.拒绝') }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="说明" prop="reason" v-if="formData.status == '3'">
+        <el-form-item :label="$t('Assets.说明')" prop="reason" v-if="formData.status == '3'">
           <el-input v-model="formData.reason" type="textarea"></el-input>
         </el-form-item>
 
@@ -101,18 +101,18 @@ export default class Name extends Vue {
   tableData: any[] = []; // 
   tableColumnData = [
     { prop: "id", label: 'ID', width: "140", },
-    { prop: "userName", label: '用户名', width: "140", },
-    { prop: "amount", label: '金额', width: "140" },
+    { prop: "userName", label: this.vm.$t('Assets.用户名'), width: "140", },
+    { prop: "amount", label: this.vm.$t('Assets.金额'), width: "140" },
     { slot: "voucher" },
     { slot: "status" },
-    { prop: "reason", label: '拒绝说明', width: "160" },
+    { prop: "reason", label: this.vm.$t('Assets.拒绝说明'), width: "160" },
     { slot: "tableOperaBtn" }
   ];
   totalCount: number = 0;
   param: any = { page: 1, pageSize: 14 };
 
   dialogVisible: boolean = false;
-  dialogTitle: string = '审核';
+  dialogTitle: string = this.vm.$t('Assets.审核');
   dialogType: number | any = 0;
 
   formData:any = {
@@ -143,7 +143,7 @@ export default class Name extends Vue {
   // 搜索项配置
   get formSearchOptions() {
     return [
-      { type: 'input', key: 'userName', label: '用户名' },
+      { type: 'input', key: 'userName', label: this.vm.$t('Assets.用户名') },
     ]
   }
 
@@ -186,7 +186,7 @@ export default class Name extends Vue {
   handleSearchClick(val) {
     let { offline, userName } = val;
     if(offline && !userName) {
-      this.$message.error('请输入用户名');
+      this.$message.error(this.vm.$t('Assets.请输入用户名'));
       return 
     }
     // 重置搜索为第一页
@@ -251,10 +251,10 @@ export default class Name extends Vue {
   
   // 点击删除
   onClickDelete(row) {
-    const text = '此操作将删除该配置';
-    const text1 = '提示';
-    const text2 = '确定';
-    const text3 = '取消';
+    const text = this.vm.$t('Assets.此操作将删除该配置');
+    const text1 = this.vm.$t('Assets.提示');
+    const text2 = this.vm.$t('Assets.确定');
+    const text3 = this.vm.$t('Assets.取消');
 
     this.$confirm(text, text1, {
       confirmButtonText: text2,
@@ -271,7 +271,7 @@ export default class Name extends Vue {
     const res = await webGetAdminVoucherExamine({
       ...this.formData,
     });
-    MessageTips(res, true, true, '操作成功', () => {
+    MessageTips(res, true, true, this.vm.$t('Assets.操作成功'), () => {
       this.getTableData();
       this.btnLoading = false;
       this.dialogVisible = false;

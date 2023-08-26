@@ -1,6 +1,6 @@
 import { VuexModule, Module, Mutation, Action, getModule } from 'vuex-module-decorators';
 import store from '@/store';
-import { sessionData } from '@/filters/storage';
+import { localData } from '@/filters/storage';
 
 export interface ResponseData {
   code: number;
@@ -93,50 +93,50 @@ export default class User extends VuexModule {
   @Mutation
   private SET_StoreToken(item: any) {
     this.Token = item;
-    sessionData('set', 'HasSessionToken', item);
+    localData('set', 'HasSessionToken', item);
     console.log(`【缓存】___用户TOKEN___${true}`);
   }
   @Mutation
   private SET_StoreUserId(item: any) {
     this.UserId = item;
-    sessionData('set', 'HasSessionUserId', item);
+    localData('set', 'HasSessionUserId', item);
     console.log(`【缓存】___用户ID___${true}`);
   }
   @Mutation
   private SET_StoreUserName(item: string) {
     this.UserName = item;
-    sessionData('set', 'HasSessionUserName', item);
+    localData('set', 'HasSessionUserName', item);
     console.log(`【缓存】___用户名___${item}`);
   }
   @Mutation
   private SET_StoreMenuItem(item: string) {
     this.MenuItem = item;
-    sessionData('set', 'HasSessionMenuItem', item);
+    localData('set', 'HasSessionMenuItem', item);
     console.log(`【缓存】___Navs左侧路菜单___${true}`);
   }
   @Mutation
   private SET_StoreMenuItemId(item: string) {
     this.MenuItemId = item;
-    sessionData('set', 'HasSessionMenuItemId', item);
+    localData('set', 'HasSessionMenuItemId', item);
     console.log(`【缓存】___Navs左侧路菜单INDEX___${item}`);
   }
   @Mutation
   private SET_StoreRouterMap(item: any) {
     this.RouterMap = item;
-    sessionData('set', 'HasSessionRouterMap', item);
+    localData('set', 'HasSessionRouterMap', item);
     console.log(`【缓存】___初次执行路由___${item}`);
   }
   @Mutation
   private SET_StoreTagsItem(item: any) {
     this.TagListMap = item;
-    sessionData('set', 'HasSessionTagsMap', item);
+    localData('set', 'HasSessionTagsMap', item);
     console.log(`【缓存】___Tags标签数组___${item}`);
   }
 
   @Mutation
   private SET_StoreMutationThemesColor(item: any) {
     this.getStoreThemesColor = item;
-    sessionData('set', 'HasSessionThemeColor', item);
+    localData('set', 'HasSessionThemeColor', item);
   }
   @Mutation
   private SET_StoreExportExcelsMap(item: any) {

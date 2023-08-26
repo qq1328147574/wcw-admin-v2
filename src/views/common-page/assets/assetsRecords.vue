@@ -30,7 +30,7 @@
     >
       <el-table-column
         slot="status"
-        label="状态"
+        :label="$t('Assets.状态')"
         align="center"
         min-width="140"
       >
@@ -44,13 +44,13 @@
             已完成
           </el-tag>
           <el-tag type="info" effect="dark" size="small" v-else>未完成</el-tag> -->
-          <el-tag type="primary" class="primary" v-if="row.status === 1">待审核</el-tag>
-          <el-tag type="success" class="success" v-else-if="row.status === 0">成功</el-tag>
-          <el-tag type="success" class="success" v-else-if="row.status === 2">审核通过</el-tag>
-          <el-tag type="danger" class="danger" v-else-if="row.status === 3">审核拒绝</el-tag>
-          <el-tag type="success" class="success" v-else-if="row.status === 4">转账中</el-tag>
-          <el-tag type="danger" class="danger" v-else-if="row.status === 5">未接收</el-tag>
-          <el-tag type="danger" class="danger" v-else-if="row.status == -1">失败</el-tag>
+          <el-tag type="primary" class="primary" v-if="row.status === 1">{{ $t('Assets.待审核') }}</el-tag>
+          <el-tag type="success" class="success" v-else-if="row.status === 0">{{ $t('Assets.成功') }}</el-tag>
+          <el-tag type="success" class="success" v-else-if="row.status === 2">{{ $t('Assets.审核通过') }}</el-tag>
+          <el-tag type="danger" class="danger" v-else-if="row.status === 3">{{ $t('Assets.审核拒绝') }}</el-tag>
+          <el-tag type="success" class="success" v-else-if="row.status === 4">{{ $t('Assets.转账中') }}</el-tag>
+          <el-tag type="danger" class="danger" v-else-if="row.status === 5">{{ $t('Assets.未接收') }}</el-tag>
+          <el-tag type="danger" class="danger" v-else-if="row.status == -1">{{ $t('Assets.失败') }}</el-tag>
         </template>
       </el-table-column>
       <!-- <el-table-column slot="tableOperaBtn" :label="$t('Users.操作')" min-width="160">
@@ -78,11 +78,11 @@ export default class Name extends Vue {
   tableData: any[] = []; //
   tableColumnData = [
     { prop: "id", label: "ID", width: "160" },
-    { prop: "userName", label: this.vm.$t("Users.用户名"), width: "140" },
-    { prop: "amount", label: "数量", width: "140" },
-    { prop: "recordType", label: "记录类型", width: "140" },
+    { prop: "userName", label: this.vm.$t("Assets.用户名"), width: "140" },
+    { prop: "amount", label: this.vm.$t('Assets.数量'), width: "140" },
+    { prop: "recordType", label: this.vm.$t('Assets.记录类型'), width: "140" },
     { slot: "status" },
-    { prop: "createTime", label: "创建时间", width: "160" },
+    { prop: "createTime", label: this.vm.$t('Assets.创建时间'), width: "160" },
   ];
   totalCount: number = 0;
   param: any = { page: 1, pageSize: 14 };
@@ -94,15 +94,15 @@ export default class Name extends Vue {
   // 搜索项配置
   get formSearchOptions() {
     return [
-      { key: "userName", type: "input", label: "用户名" },
+      { key: "userName", type: "input", label: this.vm.$t('Assets.用户名') },
       {
         key: "startTime",
         type: "time",
-        label: "从日期",
-        placeholder: "请选择",
+        label: this.vm.$t('Assets.从日期'),
+        placeholder: this.vm.$t('Assets.请选择'),
       },
-      { key: "endTime", type: "time", label: "到日期", placeholder: "请选择" },
-      { slot: "recordType", label: "记录类型" },
+      { key: "endTime", type: "time", label: this.vm.$t('Assets.到日期'), placeholder: this.vm.$t('Assets.请选择') },
+      { slot: "recordType", label: this.vm.$t('Assets.记录类型') },
       // { key: 'coinName', type: 'select', label: '钱包类型', options: [...this.wallerTypeList] }
     ];
   }
@@ -184,7 +184,7 @@ export default class Name extends Vue {
   handleSearchClick(val) {
     let { offline, userName } = val;
     if (offline && !userName) {
-      this.$message.error("请输入用户名");
+      this.$message.error(this.vm.$t('Assets.请输入用户名'));
       return;
     }
 

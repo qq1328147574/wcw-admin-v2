@@ -13,7 +13,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { baseUrl, imageUrl } from "@/common/https/baseUrl";
-import { sessionData } from "@/filters/storage";
+import { localData } from "@/filters/storage";
 
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
@@ -34,7 +34,7 @@ Quill.register("modules/ImageResize", ImageResize);
 export default class VEditor extends Vue {
   @Prop({ default: "" }) value: any; // 组件当前输入的值
 
-  token = sessionData("get", "HasSessionToken", ""); // token
+  token = localData("get", "HasSessionToken", ""); // token
   editorOption = {
     // 配置项
     modules: {

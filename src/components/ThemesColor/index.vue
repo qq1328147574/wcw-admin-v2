@@ -100,7 +100,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { UserStore } from '@/store/private/user';
-import { sessionData } from "@/filters/storage";
+import { localData } from "@/filters/storage";
 import { changeThemeColor, curColor } from '@/theme/themeColorClient';
 
 @Component({})
@@ -126,7 +126,7 @@ export default class ThemesColor extends Vue {
   }
 
   created() {
-    const ids = sessionData('get', 'themeSuccessIconType', '');  // 缓存高亮 index
+    const ids = localData('get', 'themeSuccessIconType', '');  // 缓存高亮 index
     // console.log(ids);
     if(ids !== null) this.iconSuccessType = Number(ids);
   }
@@ -152,7 +152,7 @@ export default class ThemesColor extends Vue {
   onSuccessIconClick(ids, newColor) {
     this.$message.success('切换成功');
     UserStore.storeActionThemesColor(newColor);
-    sessionData('set', 'themeSuccessIconType', ids);
+    localData('set', 'themeSuccessIconType', ids);
     this.iconSuccessType = ids;
     this.mainColor = newColor;
 
@@ -170,7 +170,7 @@ export default class ThemesColor extends Vue {
   changeColor(newColor) {
     this.$message.success('切换成功');
     UserStore.storeActionThemesColor(newColor);
-    sessionData('set', 'themeSuccessIconType', '-1');
+    localData('set', 'themeSuccessIconType', '-1');
     this.iconSuccessType = -1;
     
     // 传递值

@@ -83,7 +83,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { MessageTips } from "@/filters/MessageTips";
-import { sessionData } from "@/filters/storage";
+import { localData } from "@/filters/storage";
 import { imageUrl } from '@/common/https/baseUrl';
 
 import ElTable from "@/components/ElTable/index.vue";

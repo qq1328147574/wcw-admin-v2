@@ -6,13 +6,13 @@
       <el-form-item :label="$t('Users.用户名')" prop="userName">
         <el-input v-model="formData.userName"></el-input>
       </el-form-item>
-      <el-form-item label="全名" prop="fullName">
+      <el-form-item :label="$t('Users.全名')" prop="fullName">
         <el-input v-model="formData.fullName"></el-input>
       </el-form-item>
       <el-form-item :label="$t('Users.邮箱')" prop="email">
         <el-input v-model="formData.email"></el-input>
       </el-form-item>
-      <el-form-item :label="'手机国家码'" prop="phoneCountryCode"> 
+      <el-form-item :label="$t('Users.手机国家码')" prop="phoneCountryCode"> 
         <el-select v-model="showCountry" filterable @change="onSelect">
           <el-option :label="item.name + '(+' + item.tel + ')'" :value="item.countryCode + '-' + item.tel" v-for="(item,index) in getCountryList" :key="index"></el-option>
         </el-select>
@@ -26,7 +26,7 @@
       <!-- <el-form-item :label="'交易密码'" prop="transactionPassword">
         <el-input type="password" show-password v-model="formData.transactionPassword"></el-input>
       </el-form-item> -->
-      <el-form-item :label="'邀请码'" prop="parentUserName">
+      <el-form-item :label="$t('Users.邀请码')" prop="parentUserName">
         <el-input v-model="formData.parentUserName"></el-input>
       </el-form-item>
       <!-- <el-form-item>
@@ -62,53 +62,53 @@ export default class Name extends Vue {
   };
   rules: object = {
     email: [
-      { required: true, message: '请输入邮箱' , trigger: "blur", },
-      { type: 'email', message: '请输入正确的邮箱', trigger: ["change", "blur"] },
+      { required: true, message: this.vm.$t('Users.请输入邮箱') , trigger: "blur", },
+      { type: 'email', message: this.vm.$t('Users.请输入正确的邮箱'), trigger: ["change", "blur"] },
     ],
     userName: [
-      { required: true, message: '请输入用户名', trigger: "blur", },
-      { pattern: regBlank, message: '不能含有空格', trigger: "blur", },
+      { required: true, message: this.vm.$t('Users.请输入用户名'), trigger: "blur", },
+      { pattern: regBlank, message: this.vm.$t('Users.不能含有空格'), trigger: "blur", },
       // { min: 6, max: 18, message: '请输入6-18位英文 + 数字的组合', trigger: "change" },
       // { pattern: regMakeUpPassMin, message: '请输入6-18位英文 + 数字的组合', trigger: "change" },
     ],
     fullName: [
-      { required: true, message: '请输入全名', trigger: "blur", },
-      { pattern: regBlank, message: '不能含有空格', trigger: "blur", },
+      { required: true, message: this.vm.$t('Users.请输入全名'), trigger: "blur", },
+      { pattern: regBlank, message: this.vm.$t('Users.不能含有空格'), trigger: "blur", },
       // { min: 6, max: 18, message: '请输入6-18位英文 + 数字的组合', trigger: "change" },
       // { pattern: regMakeUpPassMin, message: '请输入6-18位英文 + 数字的组合', trigger: "change" },
     ],
     passWord: [
-      { required: true, message: '请设置密码', trigger: "blur", }, 
-      { required: true, pattern: regBlank, message: '不能含有空格', trigger: "blur", }, 
+      { required: true, message: this.vm.$t('Users.请设置密码'), trigger: "blur", }, 
+      { required: true, pattern: regBlank, message: this.vm.$t('Users.不能含有空格'), trigger: "blur", }, 
       // { min: 6, max: 18, message: '请输入6-18位英文 + 数字的组合' }, 
       // { pattern: regMakeUpPassMin, message: '请输入6-18位英文 + 数字的组合' }
     ],
     gmtUserName: [
-      { required: true, message: '请输入GMT用户名', trigger: "blur", },
-      { pattern: regBlank, message: '不能含有空格', trigger: "blur", },
+      { required: true, message: this.vm.$t('Users.请输入GMT用户名'), trigger: "blur", },
+      { pattern: regBlank, message: this.vm.$t('Users.不能含有空格'), trigger: "blur", },
       // { min: 6, max: 18, message: '请输入6-18位英文 + 数字的组合', trigger: "change" },
       // { pattern: regMakeUpPassMin, message: '请输入6-18位英文 + 数字的组合', trigger: "change" },
     ],
     gmtPassWord: [
-      { required: true, message: '请设置GMT密码', trigger: "blur", }, 
-      { required: true, pattern: regBlank, message: '不能含有空格', trigger: "blur", }, 
+      { required: true, message: this.vm.$t('Users.请设置GMT密码'), trigger: "blur", }, 
+      { required: true, pattern: regBlank, message: this.vm.$t('Users.不能含有空格'), trigger: "blur", }, 
       // { min: 6, max: 18, message: '请输入6-18位英文 + 数字的组合' }, 
       // { pattern: regMakeUpPassMin, message: '请输入6-18位英文 + 数字的组合' }
     ],
     gmtTransactionPassword: [
-      { required: true, message: '请设置GMT交易密码', trigger: "blur", }, 
-      { required: true, pattern: regBlank, message: '不能含有空格', trigger: "blur", }, 
+      { required: true, message: this.vm.$t('Users.请设置GMT交易密码'), trigger: "blur", }, 
+      { required: true, pattern: regBlank, message: this.vm.$t('Users.不能含有空格'), trigger: "blur", }, 
     ],
     transactionPassword: [
-      { required: true, message: '请设置交易密码', trigger: "blur", }, 
-      { required: true, pattern: regBlank, message: '不能含有空格', trigger: "blur", }, 
+      { required: true, message: this.vm.$t('Users.请设置交易密码'), trigger: "blur", }, 
+      { required: true, pattern: regBlank, message: this.vm.$t('Users.不能含有空格'), trigger: "blur", }, 
     ],
     cpassWord: [
-      { required: true, message: '请确认密码', trigger: "blur", },
+      { required: true, message: this.vm.$t('Users.请确认密码'), trigger: "blur", },
       {
         validator: (rule, value, callback)=> {
           if(value !== this.formData.passWord) {
-            callback(new Error('密码输入不一致'))
+            callback(new Error(this.vm.$t('Users.密码输入不一致')))
           } else {
             callback()
           }
@@ -117,22 +117,22 @@ export default class Name extends Vue {
       }
     ],
     countryCode: [
-      { required: true, message: '请选择国家', trigger: "blur", },
+      { required: true, message: this.vm.$t('Users.请选择国家'), trigger: "blur", },
     ],
     phoneCountryCode: [
-      { required: true, message: '请选择手机国家码', trigger: "blur", },
+      { required: true, message: this.vm.$t('Users.请选择手机国家码'), trigger: "blur", },
     ],
     phoneCountryTel: [
-      { required: true, message: '请选择手机国家码', trigger: "blur", },
+      { required: true, message: this.vm.$t('Users.请选择手机国家码'), trigger: "blur", },
     ],
     phone: [
-      { required: true, message: '请输入手机号', trigger: "blur", },
+      { required: true, message: this.vm.$t('Users.请输入手机号'), trigger: "blur", },
     ],
     inviterUserName: [
-      { required: true, message: '请输入邀请人', trigger: "blur", },
+      { required: true, message: this.vm.$t('Users.请输入邀请人'), trigger: "blur", },
     ],
     phoneCode: [
-      { required: true, message: '请输入验证码', trigger: "blur", },
+      { required: true, message: this.vm.$t('Users.请输入验证码'), trigger: "blur", },
     ]
   };
   buttonLoading: boolean = false;
@@ -172,7 +172,7 @@ export default class Name extends Vue {
       passWord: md5HexToUpper(passWord),
       transactionPassword: md5HexToUpper(transactionPassword)
     });
-    MessageTips(res, true, true, '注册成功', () => {
+    MessageTips(res, true, true, this.vm.$t('Users.注册成功'), () => {
       this.buttonLoading = false;
       this.$emit('result');
     }, (err) => {

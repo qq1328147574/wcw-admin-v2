@@ -37,7 +37,7 @@ export default class UserList extends VuexModule implements IterUserListState {
   @Mutation
   private SET_MutationPageUserList(item: ResponseData) {
     this.userPageList = item;
-    // sessionData('set', 'HasSessionToken', item);
+    // localData('set', 'HasSessionToken', item);
   }
 
 

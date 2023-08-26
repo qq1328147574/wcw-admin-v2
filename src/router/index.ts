@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import NProgress from 'nprogress';
 import { mountRouterMenu, localsRouter } from './routerMaps';
-import { sessionData } from '@/filters/storage';
+import { localData } from '@/filters/storage';
 import { TreeForeach } from "@/filters/common";
 import 'nprogress/nprogress.css';
 import Event from '@/utils/Event';
@@ -31,7 +31,7 @@ export function resetRouter() {
 let routeType = 0;  // 初始标识
 // 设置路由权限列表
 export const setChildrenRoute = () => {
-  const lists: any = sessionData("get", "HasSessionRouterMap", '');  // 后台缓存路由
+  const lists: any = localData("get", "HasSessionRouterMap", '');  // 后台缓存路由
   const navMenuList = JSON.parse(lists);
   
   let routerNewsList = mountRouterMenu;     // 挂载路由
@@ -73,7 +73,7 @@ const LOGIN_PAGE_NAME = ['Login', 'CompanyLogin', '404', 'AgentLogin'];
 router.beforeEach((to: any, from, next) => {
   Event.$emit('startLoading');
   NProgress.start();
-  const token = sessionData('get', 'HasSessionToken', '');
+  const token = localData('get', 'HasSessionToken', '');
   // console.log(`${to}__${from}__${token}`);
   
   if (token !== null) {

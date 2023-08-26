@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Component, Inject, Provide, Emit, Prop, Vue, Watch } from "vue-property-decorator";
-import { sessionData } from "@/filters/storage";
+import { localData } from "@/filters/storage";
 
 @Component({
   components: {

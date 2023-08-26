@@ -48,7 +48,7 @@
   <% } %>
   <!-- 使用CDN的JS文件 -->
   <script>
-    let locale = sessionStorage.getItem('accessLocaleI18n');   // 设置语言包
+    let locale = localStorage.getItem('accessLocaleI18n');   // 设置语言包
     if (locale === 'en-US') ELEMENT.locale(ELEMENT.lang.en);
     else ELEMENT.locale(ELEMENT.lang.zhCN);
   </script>

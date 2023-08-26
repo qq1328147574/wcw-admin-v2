@@ -41,7 +41,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { baseUrl, imageUrl } from '@/common/https/baseUrl'; 
-import { sessionData } from "@/filters/storage";
+import { localData } from "@/filters/storage";
 
 @Component({})
 export default class Uploads extends Vue {
@@ -53,7 +53,7 @@ export default class Uploads extends Vue {
   @Prop({ default: false }) clearFilesType?: boolean;  // 重置图片
   @Prop({ default: 2 }) fileSize: number;      // 上传的文件大小 MB
 
-  token = sessionData('get', 'HasSessionToken', ''); // token 
+  token = localData('get', 'HasSessionToken', ''); // token 
   baseUrl: string = baseUrl;
   
   dialogImageUrl: string = "";

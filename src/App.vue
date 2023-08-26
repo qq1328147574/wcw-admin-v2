@@ -1,27 +1,30 @@
 <template>
   <div id="app">
-    <router-view v-wechat-title="$route.meta.title" />
+    <router-view v-wechat-title="$t('Common.' + $route.meta.title)" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
-import { sessionData } from '@/filters/storage';
+import { localData } from '@/filters/storage';
 import { UserStore } from '@/store/private/user';
 import { CommonStore } from '@/store/private/common';
 import { changeThemeColor } from '@/theme/themeColorClient';
+import { webGetAdminLogMenusList } from '@/api';
+import { setChildrenRoute } from "@/router";
 
 @Component({
   components: {},
 })
 export default class Index extends Vue {
+  '$route': any;
   created () {
     // 更换默认颜色
     changeThemeColor('#37474f');
     
     // 重新载入路由
     const routersMapList = UserStore.RouterMap;
-    const sessionRouterMap: any = sessionData('get', 'HasSessionRouterMap', '');
+    const sessionRouterMap: any = localData('get', 'HasSessionRouterMap', '');
     if (routersMapList.length === 0 && sessionRouterMap !== null) {
       this.getUserAddRoutes();
       UserStore.storeActionRouterMap(JSON.parse(sessionRouterMap));
@@ -29,10 +32,12 @@ export default class Index extends Vue {
     }
     
     // 获取公共资源
-    let token = sessionData('get', 'HasSessionToken', '');
+    let token = localData('get', 'HasSessionToken', '');
     if(!token) return 
     // CommonStore.storeActionCoinList();
     CommonStore.storeActionCountryList();
+
+    this.getRoute();
   };
 
   mounted() {}
@@ -58,9 +63,36 @@ export default class Index extends Vue {
   }
 
   // 刷新路由
-	private getUserAddRoutes() {
+	getUserAddRoutes() {
     const getLastUrl = this.getRouterUrl();
     this.$router.push({path: getLastUrl});
+  }
+
+  async getRoute() {
+    const response = await webGetAdminLogMenusList({});
+      if(response.data.code === 20000) {
+        let data = response.data.data;
+        localStorage.setItem('allPermissions', JSON.stringify(data));
+
+        let filterList: string[] = ['/', '/WEB']; // 需要过滤的权限菜单
+        let routerList = data.filter(item=> !filterList.includes(item.code)); // 过滤权限菜单
+
+        routerList.sort((a,b)=> a - b );
+        this.filterUserRouterMenu(routerList);
+
+      }
+  }
+
+     /**
+   * @description: 路由比对
+   * @param {Object} item  -路由数据
+   * @return {*}
+   */
+   filterUserRouterMenu(item) {
+    UserStore.storeActionRouterMap(item);
+    // 初始路由
+    setChildrenRoute();
+
   }
 }
 </script>

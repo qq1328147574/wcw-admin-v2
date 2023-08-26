@@ -19,7 +19,7 @@
         <div class="toolbar flex align-center justify-between">
           <div class="title-bar flex align-center">
             <div class="left">
-              <i class="el-icon-message-solid"></i> 实时交易-提款
+              <i class="el-icon-message-solid"></i>{{ $t('Assets.实时交易-提款') }}
             </div>
             <div class="right" style="min-width: 120px;">
               <el-slider v-model="value" :step="0.1" :max="1" :min="0" @change="changeVolume"></el-slider>
@@ -34,49 +34,36 @@
         </div>
       </template>
 
-      <el-table-column slot="status" label="状态" align="center" min-width="140">
+      <el-table-column slot="status" :label="$t('Assets.状态')" align="center" min-width="140">
         <template slot-scope="{row}">
-          <el-tag type="primary" effect="dark" size="small" v-if="row.status === 1">待审核</el-tag>
-          <el-tag type="success" effect="dark" size="small" v-else-if="row.status === 0">成功</el-tag>
-          <el-tag type="danger" effect="dark" size="small" v-else-if="row.status === 3">审核拒绝</el-tag>
+          <el-tag type="primary" effect="dark" size="small" v-if="row.status === 1">{{ $t('Assets.待审核') }}</el-tag>
+          <el-tag type="success" effect="dark" size="small" v-else-if="row.status === 0">{{ $t('Assets.成功') }}</el-tag>
+          <el-tag type="danger" effect="dark" size="small" v-else-if="row.status === 3">{{ $t('Assets.审核拒绝') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column slot="tableOperaBtn" :label="$t('Users.操作')" min-width="160">
         <template slot-scope="{row}">
-          <el-button type="text" size="small" icon="el-icon-s-check" class="v-edit-btn" @click="onOpenDialog(1, row)">审核</el-button >
+          <el-button type="text" size="small" icon="el-icon-s-check" class="v-edit-btn" @click="onOpenDialog(1, row)">{{ $t('Assets.审核') }}</el-button >
         </template>
       </el-table-column>
     </ElTable>
 
-    <Dialog v-model="dialogVisible" dialogTitle="审核" @confirm="submitForm">
+    <Dialog v-model="dialogVisible" :dialogTitle="$t('Assets.审核')" @confirm="submitForm">
       <el-form :model="formData" ref="formData" :rules="rules" size="medium" label-position="top">
-        <el-form-item label="订单号" prop="id">
-          <el-input type="text" v-model="formData.id" disabled></el-input>
+        <el-form-item :label="$t('Assets.用户名')" prop="userName">
+          <el-input v-model="formData.userName" disabled></el-input>
         </el-form-item>
-        <el-form-item label="金额" prop="amount">
-          <el-input type="text" v-model="formData.amount" disabled></el-input>
+        <el-form-item :label="$t('Assets.金额')" prop="amount">
+          <el-input v-model="formData.amount" disabled></el-input>
         </el-form-item>
-
-        <el-form-item label="银行" prop="systemDrawBank">
-          <el-select v-model="formData.systemDrawBank" placeholder="请选择银行">
-            <el-option
-              v-for="item in withdrawBank"
-              :key="item.id"
-              :label="item.bankName"
-              :value="item.bankName">
-            </el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="状态" prop="status">
-          <el-radio-group v-model="formData.status" placeholder="请选择">
-            <el-radio-button label="1"> 通过 </el-radio-button>
-            <el-radio-button label="2"> 拒绝 </el-radio-button>
+        <el-form-item :label="$t('Assets.类型')" prop="status">
+          <el-radio-group v-model="formData.status" :placeholder="$t('Assets.请选择')">
+            <el-radio-button label="0">{{ $t('Assets.通过') }}</el-radio-button>
+            <el-radio-button label="3">{{ $t('Assets.拒绝') }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
-
-        <el-form-item label="说明" prop="reason">
-          <el-input type="textarea" v-model="formData.reason"></el-input>
+        <el-form-item :label="$t('Assets.说明')" prop="reason" v-if="formData.status == '3'">
+          <el-input v-model="formData.reason" type="textarea"></el-input>
         </el-form-item>
 
       </el-form>
@@ -122,13 +109,13 @@ export default class WithdrawRecords extends Vue {
   tableData: any[] = [];
   tableColumnData = [
     { prop: "id", label: 'ID', width: "140", },
-    { prop: "userName", label: '用户名', width: "140", },
-    { prop: "fullName", label: '全名', width: "140" },
-    { prop: "amount", label: '金额', width: "140" },
-    { prop: "currency", label: '货币', width: "140" },
-    { prop: "bankName", label: '银行名称', width: "140" },
-    { prop: "bankAcctName", label: '银行帐户名称', width: "140" },
-    { prop: "bankAcctNo", label: '银行账号', width: "140" },
+    { prop: "userName", label: this.vm.$t('Assets.用户名'), width: "140", },
+    { prop: "fullName", label: this.vm.$t('Assets.全名'), width: "140" },
+    { prop: "amount", label: this.vm.$t('Assets.金额'), width: "140" },
+    { prop: "currency", label: this.vm.$t('Assets.货币'), width: "140" },
+    { prop: "bankName", label: this.vm.$t('Assets.银行名称'), width: "140" },
+    { prop: "bankAcctName", label: this.vm.$t('Assets.银行帐户名称'), width: "140" },
+    { prop: "bankAcctNo", label: this.vm.$t('Assets.银行账号'), width: "140" },
     { slot: "status" },
     { slot: "tableOperaBtn" },
   ];
@@ -153,7 +140,7 @@ export default class WithdrawRecords extends Vue {
   // 搜索配置
   get formColumnData() {
     return [
-      { key: "loginId", type: "input", label: '登录账户' },
+      { key: "loginId", type: "input", label: this.vm.$t('Assets.登录账户') },
       {
         key: "startTime",
         type: "time",
@@ -285,26 +272,22 @@ export default class WithdrawRecords extends Vue {
 
   formData = {
     id: '',
-    orderId: '',
-    status: '',
-    amount: '',
     reason: '',
-    systemDrawBank: ''
+    status: '0',
+    amount: '',
+    userName: ''
   }
 
   rules = {
-    orderId: [
-      { required: true, message: '', trigger: 'blur' },
-    ],
     status: [
-      { required: true, message: '请选择', trigger: 'blur' },
+      { required: true, message: this.vm.$t("Assets.请选择") , trigger: 'blur', }
+    ],
+    userName: [
+      { required: true, message: this.vm.$t("Assets.请输入") , trigger: 'blur', }
     ],
     amount: [
-      { required: true, message: '', trigger: 'blur' },
+      { required: true, message: this.vm.$t("Assets.请输入") + this.vm.$t("Assets.数量"), trigger: 'blur', }
     ],
-    systemDrawBank: [
-      { required: true, message: '请选择', trigger: 'blur' },
-    ]
   }
 
   // 打开弹窗
@@ -312,9 +295,7 @@ export default class WithdrawRecords extends Vue {
     // console.log('row.id :>> ', row);
     if(type === 1) {
       Object.keys(this.formData).forEach(key=> {
-        if(key === 'orderId') this.formData[key] = row['id'];
-        else if(key === 'id') this.formData[key] = row['orderId'];
-        else this.formData[key] = row[key];
+        if(key !== 'status') this.formData[key] = row[key];
       })
     }
     this.dialogVisible = true;
@@ -336,7 +317,7 @@ export default class WithdrawRecords extends Vue {
     const res = await webGetAdminCheckWithdrawOrder({
       ...this.formData,
     });
-    MessageTips(res, true, true, '审核成功', () => {
+    MessageTips(res, true, true, this.vm.$t('Assets.审核成功'), () => {
       this.initGetDataList(false);
       this.btnLoading = false;
       this.dialogVisible = false;

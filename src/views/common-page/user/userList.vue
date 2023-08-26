@@ -14,15 +14,15 @@
       :tableColumnExcelData="tableColumnExcelData"
     >
       <el-button size="small" type="primary" slot="toolbar" icon="el-icon-circle-plus-outline" @click="openDialog(2, null)" v-permission="'注册用户'">{{ $t("Users.注册用户") }}</el-button >
-      <el-button size="small" type="warning" slot="toolbar" icon="el-icon-tickets" @click="openNewTreePage">组织树形图</el-button>
+      <el-button size="small" type="warning" slot="toolbar" icon="el-icon-tickets" @click="openNewTreePage">{{ $t("Users.组织树形图") }}</el-button>
       
 
       <el-table-column slot="tableOperaBtn" :label="$t('Users.操作')" align="center" min-width="320">
         <template slot-scope="{row}">
-          <el-button type="text" size="small" icon="el-icon-edit-outline" class="text-primary" @click="openDialog(3, row)">修改用户信息</el-button>
-          <el-button type="text" size="small" icon="el-icon-edit-outline" class="text-primary" @click="openDialog(1, row)">空投资产</el-button>
-          <el-button type="text" size="small" icon="el-icon-tickets" class="text-black" @click="openNewTreePage(row)">组织树形图</el-button>
-          <el-button type="text" size="small" icon="el-icon-zoom-in" class="text-black" @click="$router.push('/user/report/' + row.id + '/' + row.userName)">用户报告</el-button>
+          <el-button type="text" size="small" icon="el-icon-edit-outline" class="text-primary" @click="openDialog(3, row)">{{ $t("Users.修改用户信息") }}</el-button>
+          <el-button type="text" size="small" icon="el-icon-edit-outline" class="text-primary" @click="openDialog(1, row)">{{ $t("Users.空投资产") }}</el-button>
+          <el-button type="text" size="small" icon="el-icon-tickets" class="text-black" @click="openNewTreePage(row)">{{ $t("Users.组织树形图") }}</el-button>
+          <el-button type="text" size="small" icon="el-icon-zoom-in" class="text-black" @click="$router.push('/user/report/' + row.id + '/' + row.userName)">{{ $t("Users.用户报告") }}</el-button>
         </template>
       </el-table-column>
     </ElTable>
@@ -31,16 +31,16 @@
     <Dialog v-model="dialogVisible" :title="dialogTitle" @close="closeDialog" @confirm="confirmEdit">
       <!-- 空投 -->
       <el-form :model="formData" :rules="rules" ref="formData" size="medium" label-width="auto" label-position="top" v-if="dialogType === 1">
-        <el-form-item label="用户名" prop="userName">
+        <el-form-item :label="$t('Users.用户名')" prop="userName">
           <el-input v-model="formData.userName" disabled></el-input>
         </el-form-item>
-        <el-form-item label="类型" prop="type">
-          <el-radio-group v-model="formData.type" placeholder="请选择">
-            <el-radio-button label="1">增加</el-radio-button>
-            <el-radio-button label="-1">减少</el-radio-button>
+        <el-form-item :label="$t('Users.类型')" prop="type">
+          <el-radio-group v-model="formData.type" :placeholder="$t('Users.请选择')">
+            <el-radio-button label="1">{{ $t("Users.增加") }}</el-radio-button>
+            <el-radio-button label="-1">{{ $t("Users.减少") }}</el-radio-button>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="数量" prop="amount">
+        <el-form-item :label="$t('Users.数量')" prop="amount">
           <el-input type="number" v-model="formData.amount"></el-input>
         </el-form-item>
       </el-form>
@@ -152,17 +152,18 @@ export default class UsersList extends Vue {
   vm = window["vm"];
   tableData:any[] = [];
   tableColumnData = [
-    { prop: "memberId", label: '用户ID', width: "160", },
+    { prop: "memberId", label: this.vm.$t('Users.用户ID'), width: "160", },
     { prop: "userName", label: this.vm.$t("Users.用户名"), width: "140" },
-    { prop: "invitationCode", label: '邀请码', width: "140" },
-    { prop: "parentUserName", label: '推荐人', width: "140" },
-    { prop: "fullName", label: "全名", width: "140" },
-    { prop: "phone", label: '手机', width: "140" },
-    { prop: "email", label: '邮箱', width: "140" },
-    { prop: "showCountry", label: '国家', width: "160" },
+    { prop: "invitationCode", label: this.vm.$t('Users.邀请码'), width: "140" },
+    { prop: "parentUserName", label: this.vm.$t('Users.推荐人'), width: "140" },
+    { prop: "fullName", label: this.vm.$t('Users.全名'), width: "140" },
+    { prop: "phone", label: this.vm.$t('Users.手机'), width: "140" },
+    { prop: "email", label: this.vm.$t('Users.邮箱'), width: "140" },
+    { prop: "showCountry", label: this.vm.$t('Users.国家'), width: "160" },
     // { prop: "showUserLevel", label: '等级', width: "160" },
-    { prop: 'balance', label: '余额', width: '140' },
-    { prop: "createTime", label: "创建时间", width: "160" },
+    { prop: 'balance', label: this.vm.$t('Users.余额'), width: '140' },
+    { prop: 'withdrawalBalance', label: this.vm.$t('Users.最小提款'), width: '140' },
+    { prop: "createTime", label: this.vm.$t('Users.创建时间'), width: "160" },
     { slot: "tableOperaBtn", },
   ];
   totalCount: number = 0;
@@ -190,7 +191,7 @@ export default class UsersList extends Vue {
 
   drawerVisible: boolean = false;
   drawerData: any = {};
-  dialogTitle: string = '';
+  dialogTitle: string = "";
 
   formData:any = {
     userName: '',
@@ -211,13 +212,13 @@ export default class UsersList extends Vue {
       { required: true, message: this.vm.$t("Assets.请输入") , trigger: 'blur', }
     ],
     amount: [
-      { required: true, message: this.vm.$t("Users.请输入") + '数量', trigger: 'blur', }
+      { required: true, message: this.vm.$t("Users.请输入") + this.vm.$t("Assets.数量"), trigger: 'blur', }
     ],
     assetsType: [
-      { required: true, message: this.vm.$t("Assets.请选择") + '资产类型', trigger: 'blur', }
+      { required: true, message: this.vm.$t("Assets.请选择") + this.vm.$t("Assets.资产类型"), trigger: 'blur', }
     ],
     matchingId: [
-      { required: true, message: this.vm.$t("Assets.请选择") + '配套', trigger: 'blur', }
+      { required: true, message: this.vm.$t("Assets.请选择") + this.vm.$t("Assets.配套"), trigger: 'blur', }
     ],
   }
   
@@ -225,8 +226,8 @@ export default class UsersList extends Vue {
   get formSearchOptions() {
     return [
       { type: 'input', key: 'userName', label: this.vm.$t('Users.用户名') },
-      { key: 'startTime', type: 'time', label: '开始日期', placeholder: '请选择' },
-      { key: 'endTime', type: 'time', label: '结束日期', placeholder: '请选择' },
+      { key: 'startTime', type: 'time', label: this.vm.$t("Assets.从日期"), placeholder: this.vm.$t("Assets.请选择") },
+      { key: 'endTime', type: 'time', label: this.vm.$t("Assets.到日期"), placeholder: this.vm.$t("Assets.请选择") },
     ]
   }
 
@@ -302,16 +303,16 @@ export default class UsersList extends Vue {
     this.dialogType = type;
 
     if(type === 1) {
-      this.dialogTitle = '空投资产';
+      this.dialogTitle = this.vm.$t("Users.空投资产");
       this.formData.userName = row.userName;
       this.formData.userId = row.id;
     } else if(type === 2) {
-      this.dialogTitle = '注册用户';
+      this.dialogTitle = this.vm.$t("Users.注册用户");
     } else if(type === 3){
       this.drawerData = {...row};
-      this.dialogTitle = '修改用户信息';
+      this.dialogTitle = this.vm.$t("Users.修改用户信息");
     } else if(type === 4){
-      this.dialogTitle = '添加虚拟配套';
+      this.dialogTitle = this.vm.$t("Users.添加虚拟配套");
       this.packageForm.userId = row.id;
       this.packageForm.userName = row.userName;
     }
@@ -330,7 +331,7 @@ export default class UsersList extends Vue {
   handleSearchClick(val) {
     let { offline, userName } = val;
     if(offline && !userName) {
-      this.$message.error('请输入用户名');
+      this.$message.error(this.vm.$t("Users.请输入用户名"));
       return 
     }
     // 重置搜索为第一页
@@ -417,7 +418,7 @@ export default class UsersList extends Vue {
     console.log(param);
     
     const res = await webGetAdminAirdropAssets(param);
-    MessageTips(res, true, true, '空投成功', () => {
+    MessageTips(res, true, true, this.vm.$t("Assets.空投成功"), () => {
       this.getTableData();
       this.buttonLoading = false;
       this.$nextTick(()=> {
@@ -453,7 +454,7 @@ export default class UsersList extends Vue {
     this.buttonLoading = true;
     
     const res = await webGetAdminBuyVirtuallyPackage(this.packageForm);
-    MessageTips(res, true, true, '添加成功', () => {
+    MessageTips(res, true, true, this.vm.$t("Assets.添加成功"), () => {
       this.getTableData();
       this.buttonLoading = false;
       this.dialogVisible = false;
@@ -485,7 +486,7 @@ export default class UsersList extends Vue {
     const res = await webGetAdminCancelVirtuallyPackage({
       userId: id
     });
-    MessageTips(res, true, true, '取消成功', () => {
+    MessageTips(res, true, true, this.vm.$t("Assets.取消成功"), () => {
       this.getTableData();
       this.buttonLoading = false;
     }, (err) => {

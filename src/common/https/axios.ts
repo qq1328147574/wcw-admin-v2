@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import { Message } from 'element-ui';
-import { sessionData } from '@/filters/storage';
+import { localData } from '@/filters/storage';
 import { AESDecryptPKey, encryptData } from './nodeRSA';
 
 import { baseUrl } from './baseUrl';
@@ -22,11 +22,11 @@ const service = axios.create(axiosConfig);
 let loading: any = null;
 service.interceptors.request.use(
   config => {
-    const token = sessionData('get', 'HasSessionToken', '');
+    const token = localData('get', 'HasSessionToken', '');
     token && (config.headers['token'] = token);  // token
     config.headers['login-type'] = 'ADMIN';
     config.headers['content-type'] = "application/json;charset=utf-8";
-    config.headers['accept-language'] = sessionStorage.getItem('accessLocaleI18n') || 'zh-CN';
+    config.headers['accept-language'] = localStorage.getItem('accessLocaleI18n') || 'zh-CN';
 
 
     if(!config.data.notLoading) {
@@ -91,7 +91,7 @@ service.interceptors.response.use(
     if(error.response.status === 401) { // 对请求状态401额外处理
       (Message as any).closeAll(); // 关闭Message
       if(error.response.data.code === 87321) {
-        sessionData('clean', 'HasSessionToken', '');
+        localData('clean', 'HasSessionToken', '');
         Message.error('您的登录信息已失效!')
         window['vm'].$router.replace('/login');
       } else {

@@ -17,7 +17,9 @@ export const webGetAdminCountryCodesList = () => service.post('/api/country/list
 export const webGetAdminLogout = () => service.post('/api/admin/user/out/login', {data: {}, needEn: true});
 
 // 登录
-export const webGetAdminLogin = params => service.post('/api/auth-admin/login', {data: params, needEn: true});
+export const webGetAdminLogin2 = params => service.post('/api/auth-admin/login', {data: params, needEn: true});
+// 登录
+export const webGetAdminLogin = params => service.post('/api/auth-admin/foreverLogin', {data: params, needEn: true});
 // 用户路由权限列表
 export const webGetAdminLogMenusList = params => service.post('/api/auth-resource/userQueryResourceTree', {data: params, needEn: true});
 

@@ -1,6 +1,6 @@
 import client from 'webpack-theme-color-replacer/client';
 import forElementUI from 'webpack-theme-color-replacer/forElementUI';
-import { sessionData } from '@/filters/storage';
+import { localData } from '@/filters/storage';
 
 // 注意自己项目里的引入路径
 const appConfig = require('./app-config.ts');
@@ -26,7 +26,7 @@ export function changeThemeColor(newColor: string) {
 
 // 更新
 export function initThemeColor() {
-  let savedColor:any = sessionData('get', 'HasSessionThemeColor', '');
+  let savedColor:any = localData('get', 'HasSessionThemeColor', '');
   
   if (savedColor) {
     curColor = savedColor

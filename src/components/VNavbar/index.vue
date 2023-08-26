@@ -61,7 +61,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { UserStore } from "@/store/private/user";
-import { sessionData } from "@/filters/storage";
+import { localData } from "@/filters/storage";
 import Event from "@/utils/Event";
 
 @Component({})
@@ -78,7 +78,7 @@ export default class VNavbarPc extends Vue {
 
   collapse: boolean = false;
   activeLocale: string =
-    (sessionData("get", "accessLocaleI18n", "") as string) || "zh-CN";
+    (localData("get", "accessLocaleI18n", "") as string) || "zh-CN";
 
   // 点击导航
   onSelect(index) {

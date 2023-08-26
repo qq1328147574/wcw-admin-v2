@@ -31,7 +31,7 @@ import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { md5HexToUpper } from "@/utils/MD5";
 import { setChildrenRoute } from "@/router";
 import { MessageTips } from "@/filters/MessageTips";
-import { sessionData } from "@/filters/storage";
+import { localData } from "@/filters/storage";
 import { DeviceInfo } from "@/utils/getDeviceInfo";
 import { regBlank } from "@/filters/splitRegex";
 import { UserStore } from "@/store/private/user";
@@ -113,9 +113,9 @@ export default class Login extends Vue {
   async userLogin(devicesInfo) {
     const { userName, passWord } = this.formData;
     const res = await webGetAdminLogin({ userName, passWord: md5HexToUpper(passWord), userType: 'ADMIN'});
-    sessionData("set", "userLoginType", 'Admin');
+    localData("set", "userLoginType", 'Admin');
     if(res.data.code === 20000) {
-      sessionData("set", "HasSessionToken", res.data.data.token);
+      localData("set", "HasSessionToken", res.data.data.token);
       // 查询路由权限
       const response = await webGetAdminLogMenusList({});
       if(response.data.code === 20000) {
@@ -125,7 +125,7 @@ export default class Login extends Vue {
         let filterList: string[] = ['/', '/WEB']; // 需要过滤的权限菜单
         let routerList = data.filter(item=> !filterList.includes(item.code)); // 过滤权限菜单
 
-        sessionData('set', 'adminUser', userName); // 存储用户名
+        localData('set', 'adminUser', userName); // 存储用户名
         routerList.sort((a,b)=> a - b );
         this.filterUserRouterMenu(routerList);
 

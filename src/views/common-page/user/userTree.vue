@@ -5,7 +5,7 @@
     <!-- <Search :formColumnData="formSearchOptions" @result="handleSearchClick" @reset="resetTableData"></Search> -->
 
     <h3 class="v-table-title">
-      {{ $route.params.userName === '0' ? '' : $route.params.userName }} 组织树形图
+      {{ $route.params.userName === '0' ? '' : $route.params.userName }} {{ $t('Users.组织树形图') }}
     </h3>
 
     <div class="user-container">
@@ -33,38 +33,38 @@
       </el-row>
     </div>
 
-    <Dialog v-model="drawerVisible" title="用户信息">
+    <Dialog v-model="drawerVisible" :title="$t('Users.用户信息')">
       <el-row>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <div class="v-drawer-info">
             <div class="weui-flex font-size14">
-              <div class="weui-flex-hd font-size12 font-grey6"> {{ '用户名称' }}</div>
+              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.用户名称') }}</div>
               <div class="weui-flex-bd">{{ drawerData.userName }}</div>
             </div>
             <div class="weui-flex font-size14">
-              <div class="weui-flex-hd font-size12 font-grey6"> {{ '用户等级' }}</div>
+              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.用户等级') }}</div>
               <div class="weui-flex-bd">{{ levelList[drawerData.userLevel] }}</div>
             </div>
             <div class="weui-flex font-size14">
-              <div class="weui-flex-hd font-size12 font-grey6"> {{ '社区业绩' }} </div>
+              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.社区业绩') }} </div>
               <div class="weui-flex-bd">
                 {{ drawerData.communityPerformance }}
               </div>
             </div>
             <div class="weui-flex font-size14">
-              <div class="weui-flex-hd font-size12 font-grey6"> {{ '个人业绩' }} </div>
+              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.个人业绩') }} </div>
               <div class="weui-flex-bd">
                 {{ drawerData.ownPerformance }}
               </div>
             </div>
             <div class="weui-flex font-size14">
-              <div class="weui-flex-hd font-size12 font-grey6"> {{ '总业绩' }} </div>
+              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.总业绩') }} </div>
               <div class="weui-flex-bd">
                 {{ drawerData.communityPerformance + drawerData.ownPerformance}}
               </div>
             </div>
             <div class="weui-flex font-size14">
-              <div class="weui-flex-hd font-size12 font-grey6"> {{ '用户量' }} </div>
+              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.用户量') }} </div>
               <div class="weui-flex-bd">
                 {{ drawerData.communityPeopleNumber + 1}}
               </div>

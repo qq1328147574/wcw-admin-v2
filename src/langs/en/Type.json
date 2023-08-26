@@ -10,5 +10,9 @@
   "payCapitalPayout": "第三方支付",
   "tFMegaDeposit": "转账Mega存入",
   "tFMegaWithdraw": "转账Mega提出",
-  "depositReward": "充值奖金"
+  "depositReward": "充值奖金",
+  "firstTwoTimesDepositReward": "首次充值奖励",
+  "dailyFirstDepositReward": "每日首次充值奖励",
+  "tFPussyDeposit": "转账Pussy存入",
+  "tFPussyWithdraw": "转账Pussy提出"
 }

@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { Component, Provide, Vue, Watch, Prop } from 'vue-property-decorator';
-import { sessionData } from '@/filters/storage';
+import { localData } from '@/filters/storage';
 import { UserStore } from '@/store/private/user';
 
 type IndexData = {
