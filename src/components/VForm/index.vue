@@ -101,8 +101,11 @@ interface Options {
   inputType?: string;
   placeholder?: string;
   slot?: string;
-  options?: any[];
-  rules?: any[];
+  options?: any;
+  rules?: any;
+  disabled?: boolean;
+  callback: any;
+  onfocus: any;
 }
 
 @Component({
@@ -117,7 +120,7 @@ export default class VForms extends Vue {
   @Prop({ default: 'auto' }) labelWidth?: string; 
   @Prop({ default: true }) loading?: boolean; 
 
-  private rules: any = {}; // 表单验证规则
+  rules: any = {}; // 表单验证规则
 
   // @Inject 接收dialog 或者 drawer 传输的组件值， 只能使用对象形式
   @Inject() ComponentCloseType: CloseType; 
@@ -162,7 +165,7 @@ export default class VForms extends Vue {
    * @description 对特定数据进行处理，获取配置的rules
    * @return {*}
    */
-  private setRulesOptions() {
+  setRulesOptions() {
     this.formOptions.forEach((item) => {
       if(item.rules) {
         // this.rules[item.key] = [];
@@ -177,7 +180,7 @@ export default class VForms extends Vue {
    * @description 表单验证
    * @return {*}
    */
-  private handleSubmit() {
+  handleSubmit() {
     let ref:any = this.$refs.formData;
 
     // console.log(this.formsModel);
@@ -194,13 +197,13 @@ export default class VForms extends Vue {
    * @description 表单重置
    * @return {*}
    */
-  private handleReset() {
+  handleReset() {
     let ref:any = this.$refs.formData;
     ref.resetFields();
     this.$emit('resetFields'); // 在表单某项需要重置时调用
   };
   
-  private onCheckboxChange(val) {
+  onCheckboxChange(val) {
     // this.$forceUpdate();
   };
 

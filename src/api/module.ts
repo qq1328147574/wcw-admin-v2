@@ -146,13 +146,13 @@ export const webGetAdminRemoveFile = params => service.post('/api/security-local
 
 
 // 系统配置- 轮播图列表 
-export const webGetAdminUserSystemBannerList = params => service.post('/api/back/wu-slideshow/list', {data: params, needEn: true});
+export const webGetAdminUserSystemBannerList = params => service.post('/api/back/carousel/carouselList', {data: params, needEn: true});
 // 系统配置- 轮播图添加
-export const webGetAdminUserSystemBannerAdd = params => service.post('/api/back/wu-slideshow/add', {data: params, needEn: true});
+export const webGetAdminUserSystemBannerAdd = params => service.post('/api/back/carousel/addCarousel', {data: params, needEn: true});
 // 系统配置- 轮播图修改
-export const webGetAdminUserSystemBannerUpdate = params => service.post('/api/back/wu-slideshow/update', {data: params, needEn: true});
+export const webGetAdminUserSystemBannerUpdate = params => service.post('/api/back/carousel/updateCarousel', {data: params, needEn: true});
 // 系统配置- 轮播图删除
-export const webGetAdminUserSystemBannerDelete = params => service.post('/api/back/wu-slideshow/delete', {data: params, needEn: true});
+export const webGetAdminUserSystemBannerDelete = params => service.post('/api/back/carousel/delCarousel', {data: params, needEn: true});
 
 // 添加url过滤
 export const webGetAdminUserAddUrlFilter = params => service.post('/api/auth-url-filter/addUrlFilter', {data: params, needEn: true});

@@ -26,15 +26,18 @@ let messages = {
   }
 };
 
-let getLocaleI18n = localData('get', 'accessLocaleI18n', '');
+let getLocaleI18n = localData('get', 'accessLocaleI18n', '') || 'zh-CN';
+// console.log('getLocaleI18n :>> ', getLocaleI18n);
 let localeI18n = '';
-if(getLocaleI18n === null || getLocaleI18n == 'zh-CN') {
+if(getLocaleI18n == 'zh-CN') {
   localeI18n = 'zh'
 } else if(getLocaleI18n == 'ms-MY') {
   localeI18n = 'my';
 } else {
   localeI18n = 'en'
 }
+console.log('localeI18n :>> ', localeI18n);
+
 
 /** this.$i18n.locale
  *  fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'zh',

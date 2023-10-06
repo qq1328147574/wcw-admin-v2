@@ -24,9 +24,9 @@
                 <!--  - 
                 {{ data.lastMatchingAmount || '未购买' }} -->
               </span>
-              <!-- <span>
-                <el-button type="text" size="mini" @click="onClickView($event, node, data)"> 查看 </el-button>
-              </span> -->
+              <span>
+                <el-button type="text" size="mini" @click="onClickView($event, node, data)"> {{ $t('Users.查看') }} </el-button>
+              </span>
             </span>
           </el-tree>
         <!-- </el-col> -->
@@ -35,39 +35,19 @@
 
     <Dialog v-model="drawerVisible" :title="$t('Users.用户信息')">
       <el-row>
-        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+        <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
           <div class="v-drawer-info">
             <div class="weui-flex font-size14">
-              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.用户名称') }}</div>
+              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.用户名') }}</div>
               <div class="weui-flex-bd">{{ drawerData.userName }}</div>
             </div>
             <div class="weui-flex font-size14">
-              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.用户等级') }}</div>
-              <div class="weui-flex-bd">{{ levelList[drawerData.userLevel] }}</div>
+              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.本日业绩') }}</div>
+              <div class="weui-flex-bd">{{ drawerData.daily }}</div>
             </div>
             <div class="weui-flex font-size14">
-              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.社区业绩') }} </div>
-              <div class="weui-flex-bd">
-                {{ drawerData.communityPerformance }}
-              </div>
-            </div>
-            <div class="weui-flex font-size14">
-              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.个人业绩') }} </div>
-              <div class="weui-flex-bd">
-                {{ drawerData.ownPerformance }}
-              </div>
-            </div>
-            <div class="weui-flex font-size14">
-              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.总业绩') }} </div>
-              <div class="weui-flex-bd">
-                {{ drawerData.communityPerformance + drawerData.ownPerformance}}
-              </div>
-            </div>
-            <div class="weui-flex font-size14">
-              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.用户量') }} </div>
-              <div class="weui-flex-bd">
-                {{ drawerData.communityPeopleNumber + 1}}
-              </div>
+              <div class="weui-flex-hd font-size12 font-grey6"> {{ $t('Users.本周业绩') }}</div>
+              <div class="weui-flex-bd">{{ drawerData.weekly }}</div>
             </div>
           </div>
         </el-col>
@@ -198,5 +178,9 @@ export default class UserTree extends Vue {
 
 .weui-flex-bd {
   font-weight: bold;
+}
+
+.weui-flex {
+  padding: 10px 0;
 }
 </style>

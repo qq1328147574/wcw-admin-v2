@@ -38,7 +38,7 @@
             <el-dropdown-item command="home">{{ $t('Common.' + '控制台') }}</el-dropdown-item>
             <el-dropdown-item command="zh-CN">简体中文</el-dropdown-item>
             <el-dropdown-item command="en-US">English</el-dropdown-item>
-            <el-dropdown-item command="ms-MY">Malaysia</el-dropdown-item>
+            <el-dropdown-item command="ms-MY">Malay</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>  
       </div>
@@ -73,7 +73,7 @@ import { Logout } from '@icon-park/vue';
 })
 export default class HeaderBar extends Vue {
   hideAfterTip: number = 1000;  // 持续时间
-  langType: any = localData("get", "accessLocaleI18n", "") || "en-US";
+  langType: any = localData("get", "accessLocaleI18n", "") || "zh-CN";
   collapse: boolean = false;
   userName: any = (localData('get', 'adminUser', '') as any).toUpperCase();
 
@@ -118,6 +118,7 @@ export default class HeaderBar extends Vue {
    * @return {*}
    */
   handleLanguageCommand(e: string) {
+    console.log('e :>> ', e);
     if(e === 'home') {
       this.backHome();
       localData('set', 'HasSessionMenuItemId', '');

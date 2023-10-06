@@ -122,13 +122,13 @@
           </div>
           <el-table-column slot="status" :label="$t('Assets.状态')" min-width="120">
             <template slot-scope="{row}">
-              <el-tag type="primary" class="primary" v-if="row.status === 1">{{ $t('Report.待审核') }}</el-tag>
-              <el-tag type="success" class="success" v-else-if="row.status === 0">{{ $t('Report.成功') }}</el-tag>
-              <el-tag type="success" class="success" v-else-if="row.status === 2">{{ $t('Report.审核通过') }}</el-tag>
-              <el-tag type="danger" class="danger" v-else-if="row.status === 3">{{ $t('Report.审核拒绝') }}</el-tag>
-              <el-tag type="success" class="success" v-else-if="row.status === 4">{{ $t('Report.转账中') }}</el-tag>
-              <el-tag type="danger" class="danger" v-else-if="row.status === 5">{{ $t('Report.未接收') }}</el-tag>
-              <el-tag type="danger" class="danger" v-else>{{ $t('Report.失败') }}</el-tag>
+              <el-tag type="primary" class="primary" v-if="row.status === 1">{{ $t('Assets.待审核') }}</el-tag>
+              <el-tag type="success" class="success" v-else-if="row.status === 0">{{ $t('Assets.成功') }}</el-tag>
+              <el-tag type="success" class="success" v-else-if="row.status === 2">{{ $t('Assets.审核通过') }}</el-tag>
+              <el-tag type="danger" class="danger" v-else-if="row.status === 3">{{ $t('Assets.审核拒绝') }}</el-tag>
+              <el-tag type="success" class="success" v-else-if="row.status === 4">{{ $t('Assets.转账中') }}</el-tag>
+              <el-tag type="danger" class="danger" v-else-if="row.status === 5">{{ $t('Assets.未接收') }}</el-tag>
+              <el-tag type="danger" class="danger" v-else>{{ $t('Assets.失败') }}</el-tag>
             </template>
           </el-table-column>
         </ElTable>
@@ -136,15 +136,24 @@
           :totalCount="totalCount3" :totalPageSize="params3.pageSize" :tableExcelType="false" :needRefresh="true"
           @refreshTableChange="refreshTableData3" @handleCurrentChange="handleCurrentChange3" v-show="selectTab === 1">
           <el-table-column slot="gameType" :label="$t('Report.游戏类型')" min-width="160">
+          <template slot-scope="{row}">
+            {{ gameType[row.gameType] }}
+          </template>
+        </el-table-column>
+        <el-table-column slot="gameName" :label="$t('Report.游戏名称')" min-width="160">
+          <template slot-scope="{row}">
+            {{ gameName[row.productId] }}
+          </template>
+        </el-table-column>
+          <el-table-column slot="changeType" :label="$t('Report.记录类型')" min-width="160">
             <template slot-scope="{row}">
-              {{ gameType[row.gameType] }}
+              {{ $t('Type.' + row.changeType) }}
             </template>
           </el-table-column>
           <el-table-column slot="game" :label="$t('Report.游戏')" min-width="160">
             <template slot-scope="{row}">
-              <template v-if="row.gameImg">
-                <el-image :src="row.gameImg.includes('http') ? row.gameImg : 'https:' + row.gameImg"
-                  style="height: 80px;"></el-image>
+              <template v-if="row.gameImg && !gameId[row.gameType].includes(row.productId)">
+                <el-image :src="row.gameImg.includes('http') ? row.gameImg : 'http' + row.gameImg" style="height: 80px;"></el-image>
               </template>
               <template v-else>
                 <el-image :src="require(`../../../assets/img/game/${row.gameType}-${row.productId}.png`)"
@@ -178,7 +187,7 @@ let currentDay = new Date().getDate();
 
 let time = `${currentYear}-${currentMonth}-${currentDay}`;
 let startTime = dayjs(time).format('YYYY-MM-DD HH:mm:ss');
-let endTime = dayjs(time + '23:59:59').format('YYYY-MM-DD HH:mm:ss');
+let endTime = dayjs(time + ' 23:59:59').format('YYYY-MM-DD HH:mm:ss');
 
 // console.log('startTime :>> ', startTime);
 // console.log('endTime :>> ', endTime);
@@ -200,8 +209,10 @@ export default class DailyReport extends Vue {
     { prop: "userName", label: this.vm.$t('Report.用户名') },
     { prop: "userId", label: this.vm.$t('Report.用户ID') },
     { slot: "gameType", width: "140" },
+    { prop: "productId", label: this.vm.$t('Report.游戏ID'), width: "140" },
+    { slot: "gameName", label: this.vm.$t('Report.游戏名称'), width: "140" },
     { slot: "game", width: "140" },
-    { prop: "changeType", label: this.vm.$t('Report.类型') },
+    { slot: "changeType", label: this.vm.$t('Report.类型') },
     { prop: "txAmount", label: this.vm.$t('Report.金额') },
     { prop: "createTime", label: this.vm.$t('Report.创建时间') },
   ];
@@ -240,9 +251,36 @@ export default class DailyReport extends Vue {
   }
 
   gameType = {
-    '1': this.vm.$t('Report.老虎机'),
-    '2': this.vm.$t('Report.真人娱乐场'),
-    '3': this.vm.$t('Report.体育博彩')
+    '1': this.vm.$t('Game.老虎机'),
+    '2': this.vm.$t('Game.真人娱乐场'),
+    '3': this.vm.$t('Game.体育博彩')
+  }
+
+  gameId: any = {
+    '2': [
+      '1001', 
+      '1002', 
+      '1003', 
+      '1022', 
+    ],
+    '3': [
+      '1012'
+    ]
+  }
+  gameName: any = {
+    '1001': 'Asia Gaming',
+    '1002': 'Evolution Gaming',
+    '1003': 'All Bet',
+    '1006': 'Pragmatic Play',
+    '1011': 'Play Tech',
+    '1012': 'SBO',
+    '1013': 'Joker',
+    '1018': 'Asia Gaming',
+    '1022': 'Sexy Gaming',
+    '1050': 'PlayStar',
+    '1098': 'Felix Gaming',
+    '1102': 'KA Gaming',
+    '1111': 'Gaming World',
   }
 
   selectTab: number = 0;

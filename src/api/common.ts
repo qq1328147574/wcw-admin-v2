@@ -88,6 +88,7 @@ export const webGetAdminAddWallet = params => service.post('/api/assets/assetsLi
 // 后台查询记录类型
 export const webGetAdminQueryRecordType = params => service.post('/api/back/assets/recordTypeList', {data: params, needEn: true});
 
+
 // 后台查询系统银行户口配置
 export const webGetAdminQuerySystemBankConfig = params => service.post('/api/back/sys-bank-account/bankAccountList', {data: params, needEn: true});
 // 后台添加系统银行户口配置
@@ -202,3 +203,51 @@ export const queryAssetsRecords = params => service.post('/api/back/report/total
 
 // 后台检测待审核订单
 export const checkBankNotExamineOrder = params => service.post('/api/back/report/checkWait', {data: params, needEn: true, notLoading: params.notLoading});
+
+// 后台资产发放
+export const webGetAdminReceiveRewards = params => service.post('/api/back/assets/grant', {data: params, needEn: true});
+
+
+
+
+
+
+// mega创建账号
+export const userCreateMegaAccount = params => service.post('/api/back/game/transfer/mega/createUser', { data: params, needEn: true });
+// mega获取游戏下载地址
+export const getMegaDownloadUrl = params => service.post('/api/back/game/transfer/mega/gameDownload', { data: params, needEn: true });
+// mega获取会员信息
+export const getMegaUerInfo = params => service.post('/api/back/game/transfer/mega/localUserInfo', { data: params, needEn: true });
+// mega获取会员在线状态
+export const getMegaUerOnlineStatus = params => service.post('/api/back/game/transfer/mega/userIsOnline', { data: params, needEn: true });
+// mega退出登录
+export const getMegaUerLogout = params => service.post('/api/back/game/transfer/mega/logout', { data: params, needEn: true });
+// mega获取游戏记录
+export const getMegaUerGameRecords = params => service.post('/api/back/game/transfer/mega/gameLog', { data: params, needEn: true });
+// mega额度转换记录
+export const getMegaTransferRecords = params => service.post('/api/back/game/transfer/mega/transferQuery', { data: params, needEn: true });
+// mega额度交换
+export const megaUerTransfer = params => service.post('/api/back/game/transfer/mega/transfer', { data: params, needEn: true });
+// mega查询余额
+export const megaUerBalance = params => service.post('/api/back/game/transfer/mega/balance', { data: params, needEn: true });
+
+// 创建pussy玩家
+export const pussyCreateUser = params => service.post('/api/back/game/transfer/pussy/createUser', { data: params, needEn: true });
+// 查询pussy玩家信息
+export const pussyQueryUserInfo = params => service.post('/api/back/game/transfer/pussy/localUserInfo', { data: params, needEn: true });
+// 查询pussy玩家信息
+export const pussyGetCloudInfo = params => service.post('/api/back/game/transfer/pussy/getUserInfo', { data: params, needEn: true });
+// 更新pussy玩家密码
+export const pussyUpdateUserPwd = params => service.post('/api/back/game/transfer/pussy/changePwd', { data: params, needEn: true });
+// pussy玩家上下分
+export const pussyUpdateUserAmount = params => service.post('/api/back/game/transfer/pussy/setScorePlay', { data: params, needEn: true });
+// pussy玩家余额
+export const pussyQueryUserBalance = params => service.post('/api/back/game/transfer/pussy/balance', { data: params, needEn: true });
+// pussy游戏记录
+export const pussyQueryUserGameLog = params => service.post('/api/back/game/transfer/pussy/gameLog', { data: params, needEn: true });
+// pussy上下分明细
+export const pussyQueryUserScoreLog = params => service.post('/api/back/game/transfer/pussy/userScoreLog', { data: params, needEn: true });
+
+
+// 查询游戏绑定
+export const queryGameBind = params => service.post('/api/back/game/bind/isBind', { data: params, needEn: true });

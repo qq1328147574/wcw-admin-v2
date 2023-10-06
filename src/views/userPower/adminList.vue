@@ -1,27 +1,26 @@
 <template>
   <div class="pages">
-    <ElTable
-      :tableData="tableData"
-      :tableColumnData="tableColumnData"
-      :totalCount="totalCount"
-      @refreshTableChange="refreshTableData"
-      @handleCurrentChange="handleCurrentChange"
-    >
-      <el-button :size="currentWindow ? 'small': 'mini'" type="primary" slot="toolbar" icon="el-icon-circle-plus-outline" @click="openDialog(1, null)">{{$t('Powers.添加管理员')}}</el-button>
+    <ElTable :tableData="tableData" :tableColumnData="tableColumnData" :totalCount="totalCount"
+      @refreshTableChange="refreshTableData" @handleCurrentChange="handleCurrentChange">
+      <el-button :size="currentWindow ? 'small' : 'mini'" type="primary" slot="toolbar" icon="el-icon-circle-plus-outline"
+        @click="openDialog(1, null)">{{ $t('Powers.添加管理员') }}</el-button>
 
       <el-table-column slot="tableUserType" :label="$t('Powers.管理员类型')" :min-width="'160'">
         <template slot-scope="scope">
-          <el-tag size="small" >{{scope.row.userType ? scope.row.userType : 'admin'}}</el-tag>
+          <el-tag size="small">{{ scope.row.userType ? scope.row.userType : 'admin' }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column slot="tableRoleStatus" :label="$t('Powers.状态')" :min-width="'160'">
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.status === 1" :active-text="$t('System.正常')" :inactive-text="$t('System.禁用')" class="padding-right15" @change="handleSwitchChange(scope.row)" > </el-switch>
+          <el-switch v-model="scope.row.status === 1" :active-text="$t('Powers.正常')" :inactive-text="$t('Powers.禁用')"
+            class="padding-right15" @change="handleSwitchChange(scope.row)"> </el-switch>
         </template>
       </el-table-column>
-      <el-table-column slot="tableOperaBtn" :label="$t('Powers.操作')" :min-width="'200'" :align="currentWindow ? 'center': 'right'">
+      <el-table-column slot="tableOperaBtn" :label="$t('Powers.操作')" :min-width="'200'"
+        :align="currentWindow ? 'center' : 'right'">
         <template slot-scope="scope">
-          <el-button type="text" size="small" icon="el-icon-edit-outline" @click="openDialog(2, scope.row)">{{$t('Powers.修改角色')}}</el-button>
+          <el-button type="text" size="small" icon="el-icon-edit-outline"
+            @click="openDialog(2, scope.row)">{{ $t('Powers.修改角色') }}</el-button>
         </template>
       </el-table-column>
     </ElTable>
@@ -39,8 +38,8 @@ import { MessageTips } from "@/filters/MessageTips";
 import { md5HexToUpper } from '@/utils/MD5';
 import {
   webGetAdminGetAdminList,
-  webGetAdminAddAdmin, 
-  webGetAdminPowerUserSystemUpdate, 
+  webGetAdminAddAdmin,
+  webGetAdminPowerUserSystemUpdate,
   webGetAdminPowerUserSystemDelete,
   webGetAdminQueryRoleList, // 查询角色
   webGetAdminUpDateAdminStatus,
@@ -64,8 +63,8 @@ type IndexData = {
 export default class PowerUserList extends Vue {
   vm = window['vm'];
 
-  roleListData: any = []; 
-  tableData = []; 
+  roleListData: any = [];
+  tableData = [];
   tableColumnData: Array<object> = [
     {
       prop: "id",
@@ -80,16 +79,17 @@ export default class PowerUserList extends Vue {
     {
       slot: "tableUserType",
     },
-    {
-      prop: "remark",
-      label: '备注',
-      width: "160"
-    },
+
     {
       slot: "tableStatus"
     },
     {
       slot: "tableRoleStatus"
+    },
+    {
+      prop: "remark",
+      label: '备注',
+      width: "160"
     },
     {
       prop: "createTime",
@@ -104,7 +104,7 @@ export default class PowerUserList extends Vue {
 
   buttonLoading: boolean = false; // 加载中状态
   dialogVisible: boolean = false; // dialog 显示隐藏
-  dialogType: string | number = 1; 
+  dialogType: string | number = 1;
   dialogTitle: any = '';
   formData: any = {
     roleIds: [],
@@ -115,7 +115,7 @@ export default class PowerUserList extends Vue {
   formStatus = {
     type: 'radio',
     key: "status",
-    inputType: 'button', 
+    inputType: 'button',
     label: '管理员状态',
     options: [
       { label: '停用', value: '1' },
@@ -159,7 +159,7 @@ export default class PowerUserList extends Vue {
           trigger: 'change'
         }
       ]
-    }, 
+    },
     {
       key: "remark",
       label: '备注',
@@ -190,10 +190,10 @@ export default class PowerUserList extends Vue {
           trigger: 'change'
         }
       ]
-    }, 
+    },
   ]
   userRoleIds: string[] = [];
-  param:IndexData = {
+  param: IndexData = {
     page: 1,
     pageSize: 12
   }
@@ -206,7 +206,7 @@ export default class PowerUserList extends Vue {
     this.getRoleList();
   }
 
-  mounted() {}
+  mounted() { }
 
   // 刷新数据
   refreshTableData() {
@@ -214,21 +214,21 @@ export default class PowerUserList extends Vue {
   }
 
   handleCurrentChange(val) {
-    this.param.page = val; 
+    this.param.page = val;
     this.refreshTableData();
   }
 
   // 关闭弹窗
   closeDialog() {
-    Object.keys(this.formData).forEach(key=> {
-      if(key === 'roleIds') this.formData.roleIds = [];
+    Object.keys(this.formData).forEach(key => {
+      if (key === 'roleIds') this.formData.roleIds = [];
       else this.formData[key] = '';
     })
-    if(!this.dialogType) {
+    if (!this.dialogType) {
       this.formOptions.pop();
     }
 
-    this.$nextTick(()=> {
+    this.$nextTick(() => {
       this.formRoleData = { bindId: '', roleIds: [], deleteRoleIds: [], addRoleIds: [], count: 0 };
     })
   }
@@ -236,20 +236,20 @@ export default class PowerUserList extends Vue {
   // 打开弹窗
   openDialog(type, row) {
     this.dialogType = type;
-    if(type === 1) {
+    if (type === 1) {
       this.dialogTitle = this.$t('Powers.添加管理员');
-    } else if(type === 2) {
+    } else if (type === 2) {
       this.dialogTitle = this.$t('Powers.修改角色');
 
     } else {
       this.dialogTitle = this.$t('Powers.修改密码');
-    } 
-    if(row) {
+    }
+    if (row) {
       Object.keys(this.formData).forEach(key => {
         this.formRoleData['bindId'] = row.bindId;
       });
-      this.getUserRole(); 
-    } 
+      this.getUserRole();
+    }
     this.dialogVisible = true;
   }
 
@@ -274,34 +274,34 @@ export default class PowerUserList extends Vue {
    */
   async handleCancelClick(row) {
     const text = this.vm.$t('Powers.已取消绑定');
-    const {id} = row;
+    const { id } = row;
     const res = await webGetAdminPowerUserSystemDelete({
       userId: id
     });
-    
-    MessageTips(res, true, true, text, ()=>{
+
+    MessageTips(res, true, true, text, () => {
       this.initGetDataList();
 
     }, null)
   }
-  
+
   // 添加 修改
   confirmEdit(formName) {
     this.buttonLoading = true;
-    if(this.dialogType === 1) {
+    if (this.dialogType === 1) {
       this.submitFormAddClick();
-    } else if(this.dialogType === 2) {
+    } else if (this.dialogType === 2) {
       this.handleGetRoleList();
     }
   }
 
-   /**
-   * @description 添加管理员
-   */
+  /**
+  * @description 添加管理员
+  */
   async submitFormAddClick() {
     // console.log(this.formData);
     const text = this.vm.$t('Powers.添加成功');
-    const res = await webGetAdminAddAdmin({...this.formData, passWord: md5HexToUpper(this.formData.passWord)});
+    const res = await webGetAdminAddAdmin({ ...this.formData, passWord: md5HexToUpper(this.formData.passWord) });
 
     MessageTips(res, true, true, text, () => {
       this.initGetDataList();
@@ -332,12 +332,12 @@ export default class PowerUserList extends Vue {
 
   // 查询管理员
   async initGetDataList() {
-    const {data: res} = await webGetAdminGetAdminList({
+    const { data: res } = await webGetAdminGetAdminList({
       ...this.param
     });
-    
+
     // console.log(res);
-    if(res.code === 20000) {
+    if (res.code === 20000) {
       const systemList = res.data;
       this.tableData = systemList.records;
       this.totalCount = systemList.total;
@@ -346,7 +346,7 @@ export default class PowerUserList extends Vue {
   }
 
   // 修改管理员状态
-  async handleSwitchChange({id, status}) {
+  async handleSwitchChange({ id, status }) {
     const text = this.vm.$t('Powers.修改成功');
     const res = await webGetAdminUpDateAdminStatus({
       'status': status === 1 ? '0' : '1',
@@ -354,16 +354,16 @@ export default class PowerUserList extends Vue {
     });
 
     // console.log(res);
-    MessageTips(res, true, true, text, ()=>{
+    MessageTips(res, true, true, text, () => {
       this.initGetDataList();
     }, null)
   }
 
   // 查询角色
   async getRoleList() {
-    const {data} = await webGetAdminQueryRoleList({});
-    if(data.code === 20000) {
-      data.data.forEach(item=> {
+    const { data } = await webGetAdminQueryRoleList({});
+    if (data.code === 20000) {
+      data.data.forEach(item => {
         this.formOptions[2].options.push({
           label: item.name,
           value: item.id
@@ -374,7 +374,7 @@ export default class PowerUserList extends Vue {
         })
       })
 
-    }else {
+    } else {
       this.$message.error(data.message);
     }
   }
@@ -383,9 +383,9 @@ export default class PowerUserList extends Vue {
     const res = await webGetAdminUserQueryRole({
       bindId: this.formRoleData.bindId
     })
-    if(res.data.code === 20000) {
-      let data = res.data.data; 
-      let list = data.map(item=> item.id);
+    if (res.data.code === 20000) {
+      let data = res.data.data;
+      let list = data.map(item => item.id);
       this.formRoleData.roleIds = list;
       this.userRoleIds = list;
       // this.userRole = data;
@@ -395,20 +395,20 @@ export default class PowerUserList extends Vue {
   handleGetRoleList() {
     let baseList = this.userRoleIds;
     let roleIds = JSON.parse(JSON.stringify(this.formRoleData.roleIds));
-    let deleteRoleIds:string[] = [];
-    baseList.forEach(item=> {
-      let index = roleIds.findIndex(_item=> _item === item);
-      if(index !== -1) {
+    let deleteRoleIds: string[] = [];
+    baseList.forEach(item => {
+      let index = roleIds.findIndex(_item => _item === item);
+      if (index !== -1) {
         roleIds.splice(index, 1);
-      } else{
+      } else {
         deleteRoleIds.push(item); // 删除的角色
       }
     })
     let addRoleIds = roleIds; // 新增的角色
-    if(addRoleIds.length > 0) {
+    if (addRoleIds.length > 0) {
       this.addUserRole(addRoleIds);
     }
-    if(deleteRoleIds.length > 0) {
+    if (deleteRoleIds.length > 0) {
       this.deleterUserRole(deleteRoleIds);
     }
     this.buttonLoading = true;
@@ -419,11 +419,11 @@ export default class PowerUserList extends Vue {
       bindId: this.formRoleData.bindId,
       roleIds: ids
     });
-    if(this.formRoleData.count === 0) {
-      MessageTips(res, true, true, '修改成功', ()=> {
+    if (this.formRoleData.count === 0) {
+      MessageTips(res, true, true, '修改成功', () => {
         this.buttonLoading = false;
         this.dialogVisible = false;
-      }, ()=> {
+      }, () => {
         this.buttonLoading = false;
       })
     }
@@ -435,11 +435,11 @@ export default class PowerUserList extends Vue {
       bindId: this.formRoleData.bindId,
       roleIds: ids
     });
-    if(this.formRoleData.count === 0) {
-      MessageTips(res, true, true, '修改成功', ()=> {
+    if (this.formRoleData.count === 0) {
+      MessageTips(res, true, true, '修改成功', () => {
         this.buttonLoading = false;
         this.dialogVisible = false;
-      }, ()=> {
+      }, () => {
         this.buttonLoading = false;
       })
     }
@@ -451,6 +451,10 @@ export default class PowerUserList extends Vue {
 <style lang="scss" scoped>
 .v-form-box {
   padding: 15px 0;
-  .v-btn-box {min-width: 205px; margin-top: 30px; text-align: center;}
-}
-</style>
+
+  .v-btn-box {
+    min-width: 205px;
+    margin-top: 30px;
+    text-align: center;
+  }
+}</style>

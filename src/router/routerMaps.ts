@@ -44,6 +44,18 @@ export const mountRouterMenu: any[] = [
         component: () => import("@/views/common-page/assets/liveTickets.vue"),
         meta: { title: "实时交易" },
       },
+      {
+        path: '/mega/:userId',
+        name: 'MegaIndex',
+        component: () => import('@/views/common-page/user/mega/megaIndex.vue'),
+        meta: { title: 'MEGA' }
+      },
+      {
+        path: '/pussy/:userId',
+        name: 'pussyIndex',
+        component: () => import('@/views/common-page/user/pussy/index.vue'),
+        meta: { title: 'Pussy' }
+      },
     ]
   },
   {
@@ -251,5 +263,11 @@ export const localsRouter: any[] = [
     name: 'TotalReport',
     component: getComponentMMin('common-page/report', 'totalReport'),
     meta: { title: '总报告' }
+  },
+  {
+    path: '/receive/rewards',
+    name: 'ReceiveRewards',
+    component: getComponentMMin('common-page/rewards', 'receive'),
+    meta: { title: '领取奖励列表' }
   },
 ]

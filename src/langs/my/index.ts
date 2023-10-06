@@ -15,6 +15,10 @@ import Order from "./Order/index.json";
 import Assets from "./Assets/index.json";
 // 资产类型
 import Type from "./Type.json";
+// 游戏类型
+import Game from "./Game.json";
+// 游戏类型
+import Seconds from './Seconds.json';
 
 export default {
   Common: {
@@ -38,4 +42,8 @@ export default {
   Type: {
     ...Type,
   },
+  Game: {
+    ...Game,
+  },
+  Seconds: { ...Seconds, },
 };

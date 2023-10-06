@@ -22,8 +22,8 @@
           <span style="padding: 0 15px;">系统开启: </span>
           <el-switch
             v-model="apiStatus"
-            :active-text="$t('System.开启')"
-            :inactive-text="$t('System.关闭')"
+            :active-text="$t('Powers.正常')"
+            :inactive-text="$t('Powers.停用')"
             class="padding-right15"
             :inactive-value="-1"
             :active-value="1"

@@ -68,7 +68,7 @@ export default class Name extends Vue {
   get formSearchOptions() {
     return [
       { key: "userName", type: "input", label: this.vm.$t('Users.用户名') },
-      { key: "phone", type: "input", label: this.vm.$t('Users.电话') },
+      { key: "phone", type: "input", label: this.vm.$t('Users.手机') },
       { key: "startTime", type: "time", label: this.vm.$t('Users.开始日期'), placeholder: this.vm.$t('Users.请选择'), },
       { key: "endTime", type: "time", label: this.vm.$t('Users.结束日期'), placeholder: this.vm.$t('Users.请选择') },
     ];

@@ -6,7 +6,7 @@
     </div>
     <div class="v-list-card">
       <el-row :gutter="10">
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="6">
           <div class="v-card-item " style="padding: 10px; box-sizing: border-box;">
             <div>
               <el-button type="primary" icon="el-icon-back" size="mini" @click="$router.back()"></el-button>
@@ -24,7 +24,7 @@
             </div>
           </div>
         </el-col>
-        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="6">
           <div class="v-card-item">
             <div class="v-card-hd">
               <div class="v-card-hd-title">{{ userName }}</div>
@@ -33,13 +33,13 @@
               <div class="v-card-bd-item flex align-center">
                 <div class="label">{{ $t('Report.总充值') }}</div>
                 <div class="value center success">
-                  {{ memberReport.memberDepositAmount }}({{ memberReport.memberDepositCount }}次)
+                  {{ memberReport.memberDepositAmount }}({{ memberReport.memberDepositCount }} {{ $t('Report.次') }})
                 </div>
               </div>
               <div class="v-card-bd-item flex align-center">
                 <div class="label">{{ $t('Report.总提款') }}</div>
                 <div class="value center danger">
-                  {{ memberReport.memberWithdrawAmount }}({{ memberReport.memberWithdrawCount }}次)
+                  {{ memberReport.memberWithdrawAmount }}({{ memberReport.memberWithdrawCount }} {{ $t('Report.次') }})
                 </div>
               </div>
               <div class="v-card-bd-item flex align-center">
@@ -62,6 +62,16 @@
               </div>
             </div>
             <div class="v-card-ft"></div>
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="6">
+          <div class="v-card-item flex justify-center" style="margin-bottom: 1px;">
+            <img src="@/assets/img/mega888_btn.png" style="height: 120px; margin: 40px 0; cursor: pointer;" alt="" @click="checkBind('TF_MEGA', '/mega/' + params.userId)">
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="6">
+          <div class="v-card-item flex justify-center">
+            <img src="@/assets/img/pussy888.png" style="height: 120px; margin: 40px 0; cursor: pointer;" alt="" @click="checkBind('TF_PUSSY', '/pussy/' + params.userId)">
           </div>
         </el-col>
       </el-row>
@@ -91,13 +101,13 @@
         </div>
         <el-table-column slot="status" :label="$t('Assets.状态')" min-width="120">
           <template slot-scope="{row}">
-            <el-tag type="primary" class="primary" v-if="row.status === 1">{{ $t('Report.待审核') }}</el-tag>
-              <el-tag type="success" class="success" v-else-if="row.status === 0">{{ $t('Report.成功') }}</el-tag>
-              <el-tag type="success" class="success" v-else-if="row.status === 2">{{ $t('Report.审核通过') }}</el-tag>
-              <el-tag type="danger" class="danger" v-else-if="row.status === 3">{{ $t('Report.审核拒绝') }}</el-tag>
-              <el-tag type="success" class="success" v-else-if="row.status === 4">{{ $t('Report.转账中') }}</el-tag>
-              <el-tag type="danger" class="danger" v-else-if="row.status === 5">{{ $t('Report.未接收') }}</el-tag>
-              <el-tag type="danger" class="danger" v-else>{{ $t('Report.失败') }}</el-tag>
+            <el-tag type="primary" class="primary" v-if="row.status === 1">{{ $t('Assets.待审核') }}</el-tag>
+              <el-tag type="success" class="success" v-else-if="row.status === 0">{{ $t('Assets.成功') }}</el-tag>
+              <el-tag type="success" class="success" v-else-if="row.status === 2">{{ $t('Assets.审核通过') }}</el-tag>
+              <el-tag type="danger" class="danger" v-else-if="row.status === 3">{{ $t('Assets.审核拒绝') }}</el-tag>
+              <el-tag type="success" class="success" v-else-if="row.status === 4">{{ $t('Assets.转账中') }}</el-tag>
+              <el-tag type="danger" class="danger" v-else-if="row.status === 5">{{ $t('Assets.未接收') }}</el-tag>
+              <el-tag type="danger" class="danger" v-else>{{ $t('Assets.失败') }}</el-tag>
           </template>
         </el-table-column>
       </ElTable>
@@ -111,9 +121,19 @@
             {{ gameType[row.gameType] }}
           </template>
         </el-table-column>
+        <el-table-column slot="gameName" :label="$t('Report.游戏名称')" min-width="160">
+          <template slot-scope="{row}">
+            {{ gameName[row.productId] }}
+          </template>
+        </el-table-column>
+        <el-table-column slot="changeType" :label="$t('Report.记录类型')" min-width="160">
+          <template slot-scope="{row}">
+            {{ $t('Type.' + row.changeType) }}
+          </template>
+        </el-table-column>
         <el-table-column slot="game" :label="$t('Report.游戏')" min-width="160">
           <template slot-scope="{row}" >
-            <template v-if="row.gameImg">
+            <template v-if="row.gameImg && !gameId[row.gameType].includes(row.productId)">
               <el-image :src="row.gameImg.includes('http') ? row.gameImg : 'http' + row.gameImg" style="height: 80px;"></el-image>
             </template>
             <template v-else>
@@ -139,7 +159,8 @@ import {
   webGetAdminQueryUserList,
   queryMemberReport,
   queryMemGameRecords,
-  queryAssetsRecords
+  queryAssetsRecords,
+  queryGameBind
 } from "@/api/index";
 import { MessageTips } from "@/filters/MessageTips";
 
@@ -147,11 +168,13 @@ let currentMonth = new Date().getMonth() + 1;
 let currentYear = new Date().getFullYear();
 let currentDay = new Date().getDate();
 
+console.log('currentDay :>> ', currentDay);
+
 let monthFirstDay = dayjs(new Date(currentYear + '-' + (currentMonth)  + '-01')).format('YYYY-MM-DD HH:mm:ss');
 
 let time = `${currentYear}-${currentMonth}-${currentDay}`;
 let startTime = monthFirstDay;
-let endTime = dayjs(time + '23:59:59').format('YYYY-MM-DD HH:mm:ss');
+let endTime = dayjs(time + ' 23:59:59').format('YYYY-MM-DD HH:mm:ss');
 
 @Component({
   name: "CardList",
@@ -207,8 +230,10 @@ export default class CardList extends Vue {
   tableColumnData3 = [
     { prop: "id", label: 'ID', width: "160" },
     { slot: "gameType", width: "140" },
+    { prop: "productId", label: this.vm.$t('Report.游戏ID'), width: "140" },
+    { slot: "gameName", label: this.vm.$t('Report.游戏名称'), width: "140" },
     { slot: "game", width: "140" },
-    { prop: "changeType", label: this.vm.$t('Report.类型'), width: "160" },
+    { slot: "changeType", label: this.vm.$t('Report.类型'), width: "160" },
     { prop: "txAmount", label: this.vm.$t('Report.金额'), width: "160" },
     { prop: "createTime", label: this.vm.$t('Report.创建时间'), width: "160" },
   ];
@@ -226,22 +251,38 @@ export default class CardList extends Vue {
   userName: string = "";
 
   gameType = {
-    '1': this.vm.$t('Report.老虎机'),
-    '2': this.vm.$t('Report.真人娱乐场'),
-    '3': this.vm.$t('Report.体育博彩')
+    '1': this.vm.$t('Game.老虎机'),
+    '2': this.vm.$t('Game.真人娱乐场'),
+    '3': this.vm.$t('Game.体育博彩')
   }
 
-  gameName = {
-    '1': {
-      '1002': 'Evolution Gaming',
-      '1003': 'All Bet',
-      '1022': 'Sexy Gaming',
-      '1001': 'Asia Gaming',
-      '1011': 'Play Tech',
-    },
-    '2': {},
-    '3': {},
+  gameId: any = {
+    '2': [
+      '1001', 
+      '1002', 
+      '1003', 
+      '1022', 
+    ],
+    '3': [
+      '1012'
+    ]
   }
+  gameName: any = {
+    '1001': 'Asia Gaming',
+    '1002': 'Evolution Gaming',
+    '1003': 'All Bet',
+    '1006': 'Pragmatic Play',
+    '1011': 'Play Tech',
+    '1012': 'SBO',
+    '1013': 'Joker',
+    '1018': 'Asia Gaming',
+    '1022': 'Sexy Gaming',
+    '1050': 'PlayStar',
+    '1098': 'Felix Gaming',
+    '1102': 'KA Gaming',
+    '1111': 'Gaming World',
+  }
+    
 
   created() {
     this.params.userId = this.$route.params.id;
@@ -383,15 +424,29 @@ export default class CardList extends Vue {
     }
   }
 
-  jumpApiPage(id) {
-    this.$router.push({
-      path: '/opera/mega',
-      query: {
-        code: id
-      }
-    })
+  jumpPage(path) {
+    this.$router.push(path);
   }
-}
+
+  async checkBind(type, path) {
+    const { data } = await queryGameBind({
+      userId: this.params.userId,
+      supplier: type
+    });
+    // console.log('getMegaBinding :>> ', data);
+    if (data.code === 20000) {
+      if(!data.data) {
+        this.$message.error('用户未绑定该游戏');
+      } else {
+        if(type === 'TF_MEGA') {
+          this.jumpPage(path);
+        } else {
+          this.jumpPage(path);
+        }
+      }
+    } 
+  }
+} 
 </script>
 <style lang="scss" scoped>
 .tabs {
